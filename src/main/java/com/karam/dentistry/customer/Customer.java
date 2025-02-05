@@ -4,6 +4,10 @@
  */
 package com.karam.dentistry.customer;
 
+import com.karam.dentistry.Main;
+import com.karam.dentistry.customer.addcustomer.AddCustomer;
+import com.karam.dentistry.data.Patient;
+
 /**
  *
  * @author Karam
@@ -15,8 +19,16 @@ public class Customer extends javax.swing.JPanel {
      */
     public Customer() {
         initComponents();
-        int lastColumn = patientTable.getColumnCount();
-        patientTable.getColumnModel().getColumn(lastColumn - 1).setCellRenderer(new TableActionCellRender());
+        //int lastColumn = patientTable.getColumnCount();
+        //patientTable.getColumnModel().getColumn(lastColumn - 1).setCellRenderer(new TableActionCellRender());
+        TableActionEvent event = new TableActionEvent() {
+            @Override
+            public void onEdit(int row) {
+                System.out.println("Edit: " + row);
+            }
+        };
+        patientTable.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRender());
+        patientTable.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor());    
     }
 
     /**
@@ -56,7 +68,7 @@ public class Customer extends javax.swing.JPanel {
                 java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -69,6 +81,7 @@ public class Customer extends javax.swing.JPanel {
         });
         patientTable.setGridColor(java.awt.Color.green);
         patientTable.setRowHeight(40);
+        patientTable.setSelectionBackground(new java.awt.Color(153, 255, 102));
         patientTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         patientTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         patientTable.getTableHeader().setReorderingAllowed(false);
@@ -79,12 +92,21 @@ public class Customer extends javax.swing.JPanel {
             patientTable.getColumnModel().getColumn(5).setMaxWidth(50);
         }
 
-        searchBox.setText("Search Here...");
+        searchBox.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                searchBoxKeyPressed(evt);
+            }
+        });
 
         searchButton.setText("SEARCH");
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/karam/dentistry/images/Plus.png"))); // NOI18N
         jButton1.setText("ADD PATIENT");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -110,18 +132,50 @@ public class Customer extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(filterBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchButton)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(filterBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(searchBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(searchButton)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        AddCustomer ac = new AddCustomer();
+        ac.setVisible(true);
+        ac.toFront();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void searchBoxKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchBoxKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchBoxKeyPressed
+
+    
+    public void refreshTable(){
+        boolean isSearching = this.searchBox.getText().length() == 0;
+        int patientsSize = Main.getInstance().getDataManager().getPatients().size();
+        int maxPatients = isSearching ? patientsSize : Math.min(100, patientsSize);
+        for (int i = 0; i < maxPatients; i++){
+            if (!isSearching){
+                Patient patient = Main.getInstance().getDataManager().getPatients().get(i);
+                patientTable.setValueAt(patient.getUid(), i, 0); // uid
+                patientTable.setValueAt(patient.getFirstName() + " " + patient.getLastName(), i, 1); // full name
+                patientTable.setValueAt(patient.getDob(), i, 2); // dob
+                patientTable.setValueAt(patient.getGender(), i, 3); // gender
+                patientTable.setValueAt(patient.getPhoneNumber(), i, 4); // phone numberr
+                System.out.println("Added patient uid=" + patient.getUid());
+            }else{
+                switch (filterBox.getSelectedItem().toString()){
+                    
+                }
+            }
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> filterBox;

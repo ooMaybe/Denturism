@@ -4,6 +4,9 @@
  */
 package com.karam.dentistry.customer;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 /**
  *
  * @author Karam
@@ -47,7 +50,18 @@ public class PanelAction extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    
+    public void initEvent(TableActionEvent event, int row){
+        manageButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                event.onEdit(row);
+            }
+            
+        });
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.karam.dentistry.customer.ActionButton manageButton;

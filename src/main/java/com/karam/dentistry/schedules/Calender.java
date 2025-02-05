@@ -14,10 +14,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
-/**
- *
- * @author Karam
- */
 public class Calender extends javax.swing.JPanel {
 
     /**
@@ -54,16 +50,117 @@ public class Calender extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        calendarTable = new javax.swing.JTable();
         nextLabel = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         dateLabel = new javax.swing.JLabel();
         backButton = new javax.swing.JButton();
         nextButton = new javax.swing.JButton();
         todayButton = new javax.swing.JButton();
         weekButton = new javax.swing.JButton();
         monthButton = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        calendarTable = new javax.swing.JTable();
 
+        nextLabel.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
+        nextLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        dateLabel.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
+        dateLabel.setText("DAY - MONTH - YEAR");
+
+        backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/karam/dentistry/images/arrow.png"))); // NOI18N
+        backButton.setAlignmentX(0.5F);
+        backButton.setMargin(new java.awt.Insets(1, 1, 1, 1));
+        backButton.setMaximumSize(new java.awt.Dimension(28, 28));
+        backButton.setMinimumSize(new java.awt.Dimension(28, 28));
+        backButton.setPreferredSize(new java.awt.Dimension(28, 28));
+        backButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                backButtonMouseClicked(evt);
+            }
+        });
+
+        nextButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/karam/dentistry/images/right_arrow.png"))); // NOI18N
+        nextButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                nextButtonMouseClicked(evt);
+            }
+        });
+
+        todayButton.setBackground(new java.awt.Color(150, 50, 100));
+        todayButton.setFont(new java.awt.Font("Tw Cen MT", 1, 12)); // NOI18N
+        todayButton.setForeground(java.awt.Color.white);
+        todayButton.setText("TODAY");
+        todayButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                todayButtonMouseClicked(evt);
+            }
+        });
+
+        weekButton.setBackground(new java.awt.Color(150, 50, 100));
+        weekButton.setFont(new java.awt.Font("Tw Cen MT", 1, 12)); // NOI18N
+        weekButton.setForeground(java.awt.Color.white);
+        weekButton.setText("WEEK");
+        weekButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                weekButtonMouseClicked(evt);
+            }
+        });
+
+        monthButton.setBackground(new java.awt.Color(60, 30, 30));
+        monthButton.setFont(new java.awt.Font("Tw Cen MT", 1, 12)); // NOI18N
+        monthButton.setForeground(java.awt.Color.white);
+        monthButton.setText("MONTH");
+        monthButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                monthButtonMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(todayButton)
+                .addGap(6, 6, 6)
+                .addComponent(weekButton, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(monthButton)
+                .addGap(91, 91, 91)
+                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(dateLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(nextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(11, 11, 11)
+                            .addComponent(todayButton))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(11, 11, 11)
+                            .addComponent(weekButton))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(11, 11, 11)
+                            .addComponent(monthButton))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(10, 10, 10)
+                            .addComponent(dateLabel))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(nextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        calendarTable.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         calendarTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
@@ -110,111 +207,35 @@ public class Calender extends javax.swing.JPanel {
             calendarTable.getColumnModel().getColumn(6).setResizable(false);
         }
 
-        nextLabel.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
-        nextLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-
-        dateLabel.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
-        dateLabel.setText("MONTH - YEAR");
-
-        backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/karam/dentistry/images/arrow.png"))); // NOI18N
-        backButton.setAlignmentX(0.5F);
-        backButton.setMargin(new java.awt.Insets(1, 1, 1, 1));
-        backButton.setMaximumSize(new java.awt.Dimension(28, 28));
-        backButton.setMinimumSize(new java.awt.Dimension(28, 28));
-        backButton.setPreferredSize(new java.awt.Dimension(28, 28));
-        backButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                backButtonMouseClicked(evt);
-            }
-        });
-        backButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backButtonActionPerformed(evt);
-            }
-        });
-
-        nextButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/karam/dentistry/images/right_arrow.png"))); // NOI18N
-        nextButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                nextButtonMouseClicked(evt);
-            }
-        });
-
-        todayButton.setBackground(new java.awt.Color(150, 50, 100));
-        todayButton.setFont(new java.awt.Font("Tw Cen MT", 1, 12)); // NOI18N
-        todayButton.setForeground(java.awt.Color.white);
-        todayButton.setText("TODAY");
-        todayButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                todayButtonMouseClicked(evt);
-            }
-        });
-
-        weekButton.setBackground(new java.awt.Color(150, 50, 100));
-        weekButton.setFont(new java.awt.Font("Tw Cen MT", 1, 12)); // NOI18N
-        weekButton.setForeground(java.awt.Color.white);
-        weekButton.setText("WEEK");
-        weekButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                weekButtonMouseClicked(evt);
-            }
-        });
-
-        monthButton.setBackground(new java.awt.Color(60, 30, 30));
-        monthButton.setFont(new java.awt.Font("Tw Cen MT", 1, 12)); // NOI18N
-        monthButton.setForeground(java.awt.Color.white);
-        monthButton.setText("MONTH");
-        monthButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                monthButtonMouseClicked(evt);
-            }
-        });
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 596, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 6, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 12, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(nextLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 583, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(todayButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(weekButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(monthButton)
-                        .addGap(128, 128, 128)
-                        .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dateLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(98, 98, 98)
-                        .addComponent(nextLabel))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(nextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(todayButton)
-                                .addComponent(weekButton)
-                                .addComponent(monthButton))
-                            .addComponent(dateLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -224,15 +245,41 @@ public class Calender extends javax.swing.JPanel {
             day += 1;
         }else if (selectedButton.equals("Week")){
             day += 7;
+            if (day >= calendar.getActualMaximum(Calendar.DAY_OF_MONTH)){
+                month += 1;
+                day = 0;
+            }
         }else if (selectedButton.equals("Month")){
             month += 1;
+            if (month > 11) { 
+                month = 0; // Reset to January
+                year++; // Increase year
+            }
         }
+        // Makes sure that that daay doesnt exceed possible days in a month (EX: 28 in feb or 31 in march)
+        day = Math.min(day, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
         format();
     }//GEN-LAST:event_nextButtonMouseClicked
 
     private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
-       month -= 1;
-       format();
+       if (selectedButton.equals("Today")){
+            day -= 1;
+        }else if (selectedButton.equals("Week")){
+            day -= 7;
+        }else if (selectedButton.equals("Month")){
+            month -= 1;
+            if (month < 0) { 
+                month = 12; // Reset to January
+                year--; // Increase year
+            }
+        }
+        
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        // Makes sure that that daay doesnt exceed possible days in a month (EX: 28 in feb or 31 in march)
+        day = Math.min(day, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        format();
     }//GEN-LAST:event_backButtonMouseClicked
 
    
@@ -251,10 +298,6 @@ public class Calender extends javax.swing.JPanel {
         updateButtons();
     }//GEN-LAST:event_monthButtonMouseClicked
 
-    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_backButtonActionPerformed
-
     private void updateButtons(){
         Color unselected = new Color(150,50,100);
         Color selected = new Color(60,30,30);
@@ -269,45 +312,76 @@ public class Calender extends javax.swing.JPanel {
     
     public void format(){
         Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        
         DefaultTableModel model = (DefaultTableModel) calendarTable.getModel();
-
-        switch(selectedButton){
+        SimpleDateFormat sdf;
+        
+        switch(selectedButton){    
             case "Month":
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, month);
-
-                int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+                calendar.set(Calendar.DAY_OF_MONTH, 1); // First day of the month
+                
                 int daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+                int firstDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1; // Convert to 0-indexed
 
-                calendar.set(Calendar.DATE, dayOfWeek);
-                SimpleDateFormat sdf = new SimpleDateFormat("MMMM-YYYY");
+                sdf = new SimpleDateFormat("MMMM-yyyy");
                 dateLabel.setText(sdf.format(calendar.getTime()));   
 
-                model.setRowCount(6); // clearing the table
-                calendarTable.setRowHeight(50);
+                model.setRowCount(6); // 6 rows max
+                model.setColumnCount(7); // 7 columns (days)
+
                 int dayCounter = 1;
 
-                /*
-                looping through the table with rows and columns
-                */
-                for (int row = 0; row < 5; row++) {
+                // Fill in the month
+                for (int row = 0; row < 6; row++) {
                     for (int column = 0; column < 7; column++) {
-                        if (row == 0 && column < dayOfWeek - 1) {
+                        if (row == 0 && column < firstDayOfWeek) {
+                            // Empty cells before first day
                             model.setValueAt("", row, column);
                         } else if (dayCounter <= daysInMonth) {
-                            model.setValueAt("<html>"+dayCounter + "<br> <p style='background:red;border-radius:8px'>Chakorn's Appointment</p></html>", row, column);
+                            // Fill current month's days
+                            if (dayCounter == day && month == Calendar.getInstance().get(Calendar.MONTH)) {
+                                model.setValueAt("<html><b><span style='background-color:yellow;'>" + dayCounter + "</span></b></html>", row, column);
+                            } else {
+                                model.setValueAt("<html><b>" + dayCounter + "</b></html>", row, column);
+                            }
                             dayCounter++;
                         } else {
-                            // TODO: add next days of next month but make sure to count how much empty space is left.
+                            // Empty after last day
                             model.setValueAt("", row, column);
                         }
                     }
                 }
                 break;
             case "Week":
-                calendarTable.setRowHeight(300);
-                
-                model.setRowCount(1);
+                // Find the first day of the current week (Sunday)
+                int currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1; // 0-indexed (Sunday = 0)
+                calendar.add(Calendar.DAY_OF_MONTH, -currentDayOfWeek); // Move to Sunday
+
+                // Update the date label to show the week's range
+                SimpleDateFormat weekSdf = new SimpleDateFormat("dd MMM YYYY");
+                Calendar endOfWeek = (Calendar) calendar.clone();
+                endOfWeek.add(Calendar.DAY_OF_MONTH, 6);
+                dateLabel.setText(weekSdf.format(calendar.getTime()) + " - " + weekSdf.format(endOfWeek.getTime()));
+
+                model.setRowCount(1); // Single row
+                model.setColumnCount(7); // 7 days
+
+                for (int i = 0; i < 7; i++) {
+                    int weekDay = calendar.get(Calendar.DAY_OF_MONTH);
+                    int weekMonth = calendar.get(Calendar.MONTH);
+
+                    // Highlight today's date in week mode
+                    if (weekDay == day && weekMonth == month && year == Calendar.getInstance().get(Calendar.YEAR)) {
+                        model.setValueAt("<html><b><span style='background-color:yellow;'>" + weekDay + "</span></b></html>", 0, i);
+                    } else {
+                        model.setValueAt("<html><b>" + weekDay + "</b></html>", 0, i);
+                    }
+
+                    calendar.add(Calendar.DAY_OF_MONTH, 1); // Move to next day
+                }
                 break;
         }
         
@@ -318,6 +392,8 @@ public class Calender extends javax.swing.JPanel {
     private javax.swing.JButton backButton;
     private javax.swing.JTable calendarTable;
     private javax.swing.JLabel dateLabel;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton monthButton;
     private javax.swing.JButton nextButton;

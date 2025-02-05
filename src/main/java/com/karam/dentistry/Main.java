@@ -7,6 +7,7 @@ package com.karam.dentistry;
 import com.karam.dentistry.schedules.Calender;
 import com.karam.dentistry.Services;
 import com.karam.dentistry.customer.Customer;
+import com.karam.dentistry.data.DataManager;
 import com.karam.dentistry.schedules.Schedule;
 import java.awt.Color;
 
@@ -20,6 +21,10 @@ public class Main extends javax.swing.JFrame {
      * Creates new form Main
      */
     
+    private static Main instance = null;
+    
+    private DataManager dataManager;
+    
     private Services services;
     private Schedule schedule;
     private Customer customer;
@@ -29,12 +34,16 @@ public class Main extends javax.swing.JFrame {
     
     public Main() {
         initComponents();
+        
+        instance = this;
+        
+        dataManager = new DataManager();
+        
         services = new Services();
         schedule = new Schedule();
         customer = new Customer();
         
         mainPanel.add(services);
-        
         /*
         
         TEMPORARY: 
@@ -109,7 +118,7 @@ public class Main extends javax.swing.JFrame {
         scheduleBar.setLayout(scheduleBarLayout);
         scheduleBarLayout.setHorizontalGroup(
             scheduleBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 109, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         scheduleBarLayout.setVerticalGroup(
             scheduleBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,7 +140,7 @@ public class Main extends javax.swing.JFrame {
         customerBar.setLayout(customerBarLayout);
         customerBarLayout.setHorizontalGroup(
             customerBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 115, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         customerBarLayout.setVerticalGroup(
             customerBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,15 +155,15 @@ public class Main extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(servicesBar, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
-                    .addComponent(servicesButton, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
+                    .addComponent(servicesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 98, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(scheduleButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(scheduleBar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(scheduleBar, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(customerButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(customerBar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(customerBar, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE))
                 .addContainerGap(498, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -163,18 +172,18 @@ public class Main extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(customerButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(customerBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(servicesButton)
                             .addComponent(scheduleButton))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(servicesBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(scheduleBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(10, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(scheduleBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(servicesBar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(customerButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(customerBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         mainPanel.setLayout(new java.awt.BorderLayout());
@@ -194,7 +203,7 @@ public class Main extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -244,6 +253,8 @@ public class Main extends javax.swing.JFrame {
         servicesBar.setBackground(normalColor);
         scheduleBar.setBackground(normalColor);
         customerBar.setBackground(highlightedColor);
+        
+        customer.refreshTable();
     }//GEN-LAST:event_customerButtonMouseClicked
 
     /**
@@ -279,6 +290,26 @@ public class Main extends javax.swing.JFrame {
                 new Main().setVisible(true);
             }
         });
+    }
+    
+    public static Main getInstance(){
+        return instance;
+    }
+    
+    public DataManager getDataManager(){
+        return dataManager;
+    }
+    
+    public Services getServices() {
+        return services;
+    }
+
+    public Schedule getSchedule() {
+        return schedule;
+    }
+
+    public Customer getCustomer() {
+        return customer;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
