@@ -4,13 +4,17 @@
  */
 package com.karam.dentistry.schedules;
 
+import com.karam.dentistry.Main;
 import java.awt.Color;
 import java.awt.Component;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JButton;
+import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
@@ -36,9 +40,36 @@ public class Calender extends javax.swing.JPanel {
         day = calendar.get(Calendar.DAY_OF_MONTH);
         selectedButton = "Month";
         
-        calendarTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        calendarTable.setCellSelectionEnabled(true);
+        calendarTable.setDefaultEditor(Object.class, null); // makes it so that I cannot edit a cell
+        ListSelectionModel cellSelectionModel = calendarTable.getSelectionModel();
+        cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+         
+        calendarTable.getSelectionModel().addListSelectionListener(e -> handleSelectionChange());
+        
+        //this one ensures that if I swap columns it also updates instead of just when I swap rows
+        calendarTable.getColumnModel().getSelectionModel().addListSelectionListener(e -> handleSelectionChange());
         
         format();
+    }
+    
+    private void handleSelectionChange() {
+        int selectedRow = calendarTable.getSelectedRow();
+        int selectedColumn = calendarTable.getSelectedColumn();
+
+        if (selectedRow != -1 && selectedColumn != -1) { // Ensure a valid selection
+            Object value = calendarTable.getValueAt(selectedRow, selectedColumn);
+            
+            if (selectedButton.equals("Today")){
+                
+            }else if (selectedButton.equals("Week")){
+                
+            }else if (selectedButton.equals("Month")){
+            }
+            
+            Main.getInstance().getSchedule().updateCurrentAppointments(value, calendar, day);
+            System.out.println("maybe row=" + selectedRow + " col=" + selectedColumn);
+        }
     }
 
     /**
@@ -191,8 +222,8 @@ public class Calender extends javax.swing.JPanel {
         });
         calendarTable.setAlignmentY(0.0F);
         calendarTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        calendarTable.setCellSelectionEnabled(true);
         calendarTable.setRowHeight(50);
+        calendarTable.setRowSelectionAllowed(false);
         calendarTable.setShowGrid(true);
         calendarTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(calendarTable);
@@ -262,7 +293,7 @@ public class Calender extends javax.swing.JPanel {
     }//GEN-LAST:event_nextButtonMouseClicked
 
     private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
-       if (selectedButton.equals("Today")){
+        if (selectedButton.equals("Today")){
             day -= 1;
         }else if (selectedButton.equals("Week")){
             day -= 7;
@@ -385,6 +416,10 @@ public class Calender extends javax.swing.JPanel {
                 break;
         }
         
+    }
+    
+    public JTable getCalendarTable(){
+        return calendarTable;
     }
     
 

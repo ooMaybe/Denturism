@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.karam.dentistry.customer.addcustomer;
+package com.karam.dentistry.customer;
 
 import com.karam.dentistry.Main;
 import com.karam.dentistry.data.Patient;
@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -350,6 +351,12 @@ public class AddCustomer extends javax.swing.JFrame {
 
     private void registerPatientButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerPatientButtonMousePressed
         // TODO add your handling code here:
+        
+        if (dobSelector.getDate() == null){
+            JOptionPane.showMessageDialog(null, "You cannot have an empty date of birth!", "Error!", JOptionPane.OK_OPTION);
+            return;
+        }
+        
         Patient patient = new Patient(UID);
         
         patient.setFirstName(this.firstNameSelector.getText());
@@ -377,6 +384,8 @@ public class AddCustomer extends javax.swing.JFrame {
         Main.getInstance().getDataManager().insertPatient(patient);
         Main.getInstance().getCustomer().refreshTable();
         
+        
+        JOptionPane.showMessageDialog(null, "Sucessfully added the patient uid=" + patient.getUid(), "Sucess!", JOptionPane.OK_OPTION);
         this.dispose();
     }//GEN-LAST:event_registerPatientButtonMousePressed
 

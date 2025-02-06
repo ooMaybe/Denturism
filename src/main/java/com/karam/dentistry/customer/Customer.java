@@ -4,9 +4,12 @@
  */
 package com.karam.dentistry.customer;
 
+import com.karam.dentistry.customer.table.TableActionCellRender;
+import com.karam.dentistry.customer.table.TableActionEvent;
+import com.karam.dentistry.customer.table.TableActionCellEditor;
 import com.karam.dentistry.Main;
-import com.karam.dentistry.customer.addcustomer.AddCustomer;
 import com.karam.dentistry.data.Patient;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -28,7 +31,7 @@ public class Customer extends javax.swing.JPanel {
             }
         };
         patientTable.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRender());
-        patientTable.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor());    
+        patientTable.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor(event));    
     }
 
     /**
@@ -153,28 +156,51 @@ public class Customer extends javax.swing.JPanel {
 
     private void searchBoxKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchBoxKeyPressed
         // TODO add your handling code here:
+        refreshTable();
     }//GEN-LAST:event_searchBoxKeyPressed
 
     
     public void refreshTable(){
-        boolean isSearching = this.searchBox.getText().length() == 0;
+        boolean isSearching = this.searchBox.getText().length() != 0;
         int patientsSize = Main.getInstance().getDataManager().getPatients().size();
         int maxPatients = isSearching ? patientsSize : Math.min(100, patientsSize);
+        DefaultTableModel dm = (DefaultTableModel) patientTable.getModel();
+        dm.setRowCount(0);
         for (int i = 0; i < maxPatients; i++){
+            Patient patient = Main.getInstance().getDataManager().getPatients().get(i);
             if (!isSearching){
-                Patient patient = Main.getInstance().getDataManager().getPatients().get(i);
-                patientTable.setValueAt(patient.getUid(), i, 0); // uid
-                patientTable.setValueAt(patient.getFirstName() + " " + patient.getLastName(), i, 1); // full name
-                patientTable.setValueAt(patient.getDob(), i, 2); // dob
-                patientTable.setValueAt(patient.getGender(), i, 3); // gender
-                patientTable.setValueAt(patient.getPhoneNumber(), i, 4); // phone numberr
-                System.out.println("Added patient uid=" + patient.getUid());
+                addPatient(patient, i);
             }else{
                 switch (filterBox.getSelectedItem().toString()){
-                    
+                    case "Patient First Name":
+                        if (patient.getFirstName().contains(searchBox.getText())){
+                            addPatient(patient, i);
+                        }
+                        break;
+                    case "Patient Last Name":
+                        if (patient.getLastName().contains(searchBox.getText())){
+                            addPatient(patient, i);
+                        }
+                        break;
+                    case "Patient UID":
+                        if (patient.getUid().toString().contains(searchBox.getText())){
+                            addPatient(patient, i);
+                        }
+                        break;
                 }
             }
         }
+    }
+    
+    private void addPatient(Patient patient, int row){
+        DefaultTableModel model = (DefaultTableModel) patientTable.getModel();
+        model.addRow(new Object[] {
+            patient.getUid(),
+            patient.getFirstName() + " " + patient.getLastName(),
+            patient.getDob(),
+            patient.getGender(),
+            patient.getPhoneNumber()
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

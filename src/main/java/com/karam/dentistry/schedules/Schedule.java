@@ -4,6 +4,9 @@
  */
 package com.karam.dentistry.schedules;
 
+import com.karam.dentistry.Main;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Karam
@@ -13,10 +16,13 @@ public class Schedule extends javax.swing.JPanel {
     /**
      * Creates new form Schedule
      */
+    
+    private Calender calender;
+    
     public Schedule() {
         initComponents();
         this.removeAll();
-        this.add(new Calender());
+        this.add(calender = new Calender()); // adds it to panel and instantiates at the same time.
         this.repaint();
         this.revalidate();
     }
@@ -32,15 +38,13 @@ public class Schedule extends javax.swing.JPanel {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel2 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         printButton = new javax.swing.JButton();
+        addAppointmentButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         calender1 = new com.karam.dentistry.schedules.Calender();
-
-        jButton2.setText("ADD APPOINTMENT");
 
         jButton1.setText("REMOVE APPOINTMENT");
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -48,16 +52,23 @@ public class Schedule extends javax.swing.JPanel {
         printButton.setText("PRINT SCHEDULE");
         printButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        addAppointmentButton.setText("ADD APPOINTMENT");
+        addAppointmentButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addAppointmentButtonMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(addAppointmentButton)
+                .addGap(16, 16, 16)
                 .addComponent(jButton1)
-                .addGap(126, 126, 126)
+                .addGap(109, 109, 109)
                 .addComponent(printButton, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -66,9 +77,9 @@ public class Schedule extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(printButton)
                     .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(printButton))
+                    .addComponent(addAppointmentButton))
                 .addContainerGap())
         );
 
@@ -93,7 +104,7 @@ public class Schedule extends javax.swing.JPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -107,36 +118,55 @@ public class Schedule extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(calender1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(calender1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(calender1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void addAppointmentButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addAppointmentButtonMouseClicked
+        int selectedRow = calender.getCalendarTable().getSelectedRow();
+        int selectedColumn = calender.getCalendarTable().getSelectedColumn();
+                
+        if (selectedRow == -1 || selectedColumn == -1) { // Ensures a valid selection in the jtable
+            JOptionPane.showMessageDialog(null, "You must select a valid day from the calendar!", "Error!", JOptionPane.OK_OPTION);
+            return;
+        }
+        
+        if (calender.getCalendarTable().getValueAt(selectedRow, selectedColumn) == null){
+            JOptionPane.showMessageDialog(null, "You must select a valid object!", "Error!", JOptionPane.OK_OPTION);
+            return;
+        }
+        
+        Main.getInstance().getSchedule().updateCurrentAppointments();
+    }//GEN-LAST:event_addAppointmentButtonMouseClicked
+
+    public void updateCurrentAppointments(){
+        
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addAppointmentButton;
     private com.karam.dentistry.schedules.Calender calender1;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

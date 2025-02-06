@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.karam.dentistry.customer;
+package com.karam.dentistry.customer.table;
 
 import java.awt.Component;
 import javax.swing.DefaultCellEditor;
@@ -18,7 +18,7 @@ public class TableActionCellEditor extends DefaultCellEditor{
 
     private TableActionEvent event;
     
-    public TableActionCellEditor() {
+    public TableActionCellEditor(TableActionEvent event) {
         super(new JCheckBox());
         this.event = event;
     }
