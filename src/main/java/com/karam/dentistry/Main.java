@@ -95,18 +95,19 @@ public class Main extends javax.swing.JFrame {
         });
 
         servicesBar.setBackground(new java.awt.Color(150, 50, 100));
-        servicesBar.setMinimumSize(new java.awt.Dimension(90, 100));
+        servicesBar.setMaximumSize(new java.awt.Dimension(98, 5));
+        servicesBar.setMinimumSize(new java.awt.Dimension(98, 5));
         servicesBar.setPreferredSize(new java.awt.Dimension(0, 5));
 
         javax.swing.GroupLayout servicesBarLayout = new javax.swing.GroupLayout(servicesBar);
         servicesBar.setLayout(servicesBarLayout);
         servicesBarLayout.setHorizontalGroup(
             servicesBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 98, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         servicesBarLayout.setVerticalGroup(
             servicesBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 5, Short.MAX_VALUE)
         );
 
         scheduleButton.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
@@ -118,13 +119,15 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        scheduleBar.setMaximumSize(new java.awt.Dimension(98, 5));
+        scheduleBar.setMinimumSize(new java.awt.Dimension(98, 5));
         scheduleBar.setPreferredSize(new java.awt.Dimension(0, 5));
 
         javax.swing.GroupLayout scheduleBarLayout = new javax.swing.GroupLayout(scheduleBar);
         scheduleBar.setLayout(scheduleBarLayout);
         scheduleBarLayout.setHorizontalGroup(
             scheduleBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 98, Short.MAX_VALUE)
         );
         scheduleBarLayout.setVerticalGroup(
             scheduleBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,15 +163,15 @@ public class Main extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(servicesBar, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
-                    .addComponent(servicesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                    .addComponent(servicesButton, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
+                    .addComponent(servicesBar, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scheduleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(scheduleBar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(scheduleButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(scheduleBar, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(customerButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(customerButton, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
                     .addComponent(customerBar, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE))
                 .addContainerGap(495, Short.MAX_VALUE))
         );
@@ -183,8 +186,8 @@ public class Main extends javax.swing.JFrame {
                             .addComponent(scheduleButton))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(scheduleBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(servicesBar, javax.swing.GroupLayout.PREFERRED_SIZE, 5, Short.MAX_VALUE)))
+                            .addComponent(servicesBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(scheduleBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(customerButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -227,7 +230,7 @@ public class Main extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 95, Short.MAX_VALUE))
         );
 
         pack();
