@@ -35,16 +35,21 @@ public class Calender extends javax.swing.JPanel {
         initComponents();
         calendar = Calendar.getInstance();
         calendar.setTime(new Date());
+        
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
+        
         selectedButton = "Month";
         
         calendarTable.setCellSelectionEnabled(true);
         calendarTable.setDefaultEditor(Object.class, null); // makes it so that I cannot edit a cell
-        ListSelectionModel cellSelectionModel = calendarTable.getSelectionModel();
-        cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        calendarTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
          
+        calendarTable.getTableHeader().setReorderingAllowed(false);
+        calendarTable.getColumnModel().setColumnSelectionAllowed(true);
+        
+        // when a cell is selected handle the "event"
         calendarTable.getSelectionModel().addListSelectionListener(e -> handleSelectionChange());
         
         //this one ensures that if I swap columns it also updates instead of just when I swap rows
@@ -65,10 +70,12 @@ public class Calender extends javax.swing.JPanel {
             }else if (selectedButton.equals("Week")){
                 
             }else if (selectedButton.equals("Month")){
+                
             }
             
-            Main.getInstance().getSchedule().updateCurrentAppointments(value, calendar, day);
-            System.out.println("maybe row=" + selectedRow + " col=" + selectedColumn);
+            Main.getInstance().getSchedule().setLastSelectedColumn(selectedColumn);
+            Main.getInstance().getSchedule().setLastSelectedRow(selectedRow);
+            Main.getInstance().getSchedule().updateCurrentAppointments(value);
         }
     }
 
@@ -422,7 +429,10 @@ public class Calender extends javax.swing.JPanel {
         return calendarTable;
     }
     
-
+    public String getButton(){
+        return selectedButton;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
     private javax.swing.JTable calendarTable;
