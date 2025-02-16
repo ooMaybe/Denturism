@@ -16,6 +16,7 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -51,7 +52,7 @@ public class DataManager {
                 conn.setAutoCommit(true);
                 System.out.println("Connection to SQLLite has been established.");
                 
-                String tableCreation = 
+                query(QueryType.POST,
                         "CREATE TABLE IF NOT EXISTS patients("
                         + " uid PRIMARY KEY,"
                         // Personal Information
@@ -73,10 +74,7 @@ public class DataManager {
                         + " insuranceCompany TEXT,"
                         + " insuranceEmployer TEXT,"
                         + " insuranceIdNumber TEXT,"
-                        + " insuranceTelephone TEXT)";
-                
-                Statement stmt = conn.createStatement();
-                stmt.execute(tableCreation);
+                        + " insuranceTelephone TEXT)");
                 System.out.println("Sucessfully created the patients table.");
                 
                 load();
@@ -131,8 +129,11 @@ public class DataManager {
                 patients.add(patient);
                 System.out.println("Loading patient uid=" + result.getString("uid"));
             }
+            
+            //  do another query for appointments
         } catch (SQLException ex) {
-            Logger.getLogger(DataManager.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Failed to load patients database!", "Error!", JOptionPane.OK_OPTION);
+            ex.printStackTrace();
         }
     }
     
@@ -169,7 +170,7 @@ public class DataManager {
         }catch(Exception e){
             e.printStackTrace();
         }
-    }   
+    }
     
     public Object query(QueryType type, String query) {
         try {
@@ -190,11 +191,20 @@ public class DataManager {
                 PreparedStatement pst = this.conn.prepareStatement(query);
                 pst.executeUpdate();
                 return null;
+            }else{
+                // TODO: make this print something so that it looks cleaner and prevents accidentals
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+    
+    public Patient getPatientByFullName(String fullName){
+        return getPatients().stream()
+                .filter(p -> p.getFirstName().equals(fullName.split(" ")[0])) // Since fullName is a full patient name like "Jane Doe", it splits it into a string array {"Jane", "Doe"} and it grabs the first elemment 
+                .filter(p -> p.getLastName().equals(fullName.split(" ")[1]))
+                .findFirst().orElse(null); // grabs the first available patient from the list otherwise returrn a null
     }
     
     public ArrayList<Patient> getPatients() {

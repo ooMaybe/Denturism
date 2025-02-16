@@ -4,6 +4,8 @@
  */
 package com.karam.dentistry.schedules.appointments;
 
+import java.util.Arrays;
+
 /**
  *
  * @author karam
@@ -26,5 +28,12 @@ public enum AppointmentType {
     
     public String getColor(){
         return color;
+    }
+    
+    public static AppointmentType find(String type){
+        return Arrays.asList(AppointmentType.values())
+                .stream()
+                .filter(appType -> appType.equals(type.replace(" ", "_")))
+                .findFirst().orElse(null);
     }
 }

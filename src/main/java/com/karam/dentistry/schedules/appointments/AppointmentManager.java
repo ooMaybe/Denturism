@@ -4,9 +4,12 @@
  */
 package com.karam.dentistry.schedules.appointments;
 
+import com.karam.dentistry.Main;
 import com.karam.dentistry.data.Patient;
+import com.karam.dentistry.schedules.Schedule;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,11 +24,19 @@ public class AppointmentManager {
     }
     
     public void addAppointment(Appointment appointment){
+        Schedule schedule = Main.getInstance().getSchedule();
+        Object value = schedule.getCalender().getCalendarTable().getValueAt(schedule.getLastSelectedRow(), schedule.getLastSelectedColumn());
+        if (value == null || value.toString().length() == 0){
+            JOptionPane.showMessageDialog(null, "You must select a valid day in the calendar!", "Error!", JOptionPane.OK_OPTION);
+            return;
+        }
         
+        appointments.add(appointment);
+        Main.getInstance().getSchedule().updateCurrentAppointments(value);
     }
-    
-    public void addAppointmeent(Patient patient, AppointmentType type){
-        
+
+    public List<Appointment> getAppointments() {
+        return appointments;
     }
     
 }

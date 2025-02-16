@@ -5,6 +5,7 @@
 package com.karam.dentistry.schedules;
 
 import com.karam.dentistry.Main;
+import com.karam.dentistry.schedules.appointments.Appointment;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,6 +21,8 @@ public class Schedule extends javax.swing.JPanel {
     private Calender calender;
     private int lastSelectedRow = -1;
     private int lastSelectedColumn = -1;
+    
+    private AppointmentMaker appMaker;
     
     public Schedule() {
         initComponents();
@@ -172,16 +175,19 @@ public class Schedule extends javax.swing.JPanel {
         }
         
         System.out.println(value.toString());
-        updateCurrentAppointments(value);
         
-        AppointmentMaker appMaker = new AppointmentMaker();
+        appMaker = new AppointmentMaker();
         appMaker.setVisible(true);
         appMaker.toFront();
-        appMaker.setAlwaysOnTop(true);
+        appMaker.setAlwaysOnTop(false);
     }//GEN-LAST:event_addAppointmentButtonMouseClicked
 
     public void updateCurrentAppointments(Object value){
-        //appointmentsPanel.
+        // convert value from html to a day/thingyyy 
+        for (Appointment appointment : Main.getInstance().getAppointmentManager().getAppointments()){
+            
+        }
+        appointmentsPanel.
     }
 
     public int getLastSelectedRow() {
@@ -198,6 +204,10 @@ public class Schedule extends javax.swing.JPanel {
 
     public void setLastSelectedColumn(int lastSelectedColumn) {
         this.lastSelectedColumn = lastSelectedColumn;
+    }
+
+    public Calender getCalender() {
+        return calender;
     }
     
 
