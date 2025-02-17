@@ -5,6 +5,7 @@
 package com.karam.dentistry.schedules.appointments;
 
 import com.karam.dentistry.data.Patient;
+import java.util.Date;
 
 import java.util.UUID;
 
@@ -16,12 +17,14 @@ public class Appointment {
     
     private String appointmentID;
     private String patientID;
+    private Date appointmentDate;
     private AppointmentType type;
     private String additionalNotes;
     
-    public Appointment(UUID patientID, AppointmentType type, String additionalNotes){
+    public Appointment(UUID patientID, Date appointmentDate, AppointmentType type, String additionalNotes){
         this.appointmentID = UUID.randomUUID().toString();
         this.patientID = patientID.toString();
+        this.appointmentDate = appointmentDate;
         this.type = type;
         this.additionalNotes = additionalNotes;
     }
@@ -40,6 +43,14 @@ public class Appointment {
 
     public void setPatientID(String patientID) {
         this.patientID = patientID;
+    }
+    
+    public Date getAppointmentDate() {
+        return appointmentDate;
+    }
+
+    public void setAppointmentDate(Date appointmentDate) {
+        this.appointmentDate = appointmentDate;
     }
 
     public AppointmentType getType() {

@@ -4,10 +4,16 @@
  */
 package com.karam.dentistry.schedules;
 
+import com.github.lgooddatepicker.components.TimePicker;
+import com.github.lgooddatepicker.components.TimePickerSettings;
+import com.github.lgooddatepicker.zinternaltools.TimeSpinnerTimer;
 import com.karam.dentistry.Main;
 import com.karam.dentistry.data.Patient;
 import com.karam.dentistry.schedules.appointments.Appointment;
 import com.karam.dentistry.schedules.appointments.AppointmentType;
+import java.lang.reflect.Field;
+import java.time.LocalTime;
+import java.util.Calendar;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -43,6 +49,14 @@ public class AppointmentMaker extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         notesArea = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
+        TimePickerSettings settings = new TimePickerSettings();
+        settings.generatePotentialMenuTimes(TimePickerSettings.TimeIncrement.FifteenMinutes, LocalTime.MIDNIGHT, LocalTime.of(23, 50));
+        startingTime = new com.github.lgooddatepicker.components.TimePicker(settings);
+        jLabel4 = new javax.swing.JLabel();
+        TimePickerSettings settingsEnd = new TimePickerSettings();
+        settingsEnd.generatePotentialMenuTimes(TimePickerSettings.TimeIncrement.FifteenMinutes, LocalTime.MIDNIGHT, LocalTime.of(23, 50));
+        endingTime = new com.github.lgooddatepicker.components.TimePicker(settingsEnd);
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,6 +84,10 @@ public class AppointmentMaker extends javax.swing.JFrame {
 
         jLabel3.setText("Additional Notes");
 
+        jLabel4.setText("Appointment Starting Time");
+
+        jLabel5.setText("Appointment Ending Time");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -83,18 +101,27 @@ public class AppointmentMaker extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(cancelAppointment))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(patientSelector, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(appointmentTypeSelector, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
-                                .addGap(0, 143, Short.MAX_VALUE))
-                            .addComponent(appointmentTypeSelector, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
+                            .addComponent(startingTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(endingTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(0, 34, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -110,10 +137,17 @@ public class AppointmentMaker extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(appointmentTypeSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(startingTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(endingTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelAppointment)
@@ -141,7 +175,7 @@ public class AppointmentMaker extends javax.swing.JFrame {
         AppointmentType appointmentType = AppointmentType.find(appointmentTypeSelector.getSelectedItem().toString());
         String additionalNotes = notesArea.getText();
         
-        Appointment appointment = new Appointment(patient.getUid(), appointmentType, additionalNotes);
+        Appointment appointment = null;//new Appointment(patient.getUid(), appointmentType, additionalNotes);
         Main.getInstance().getAppointmentManager().addAppointment(appointment);
         
         try{
@@ -168,16 +202,24 @@ public class AppointmentMaker extends javax.swing.JFrame {
         }
     }
     
+    private Calendar fromCalendar(){
+        return null;
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> appointmentTypeSelector;
     private javax.swing.JButton cancelAppointment;
+    private com.github.lgooddatepicker.components.TimePicker endingTime;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea notesArea;
     private javax.swing.JComboBox<String> patientSelector;
     private javax.swing.JButton saveAppointmentButton;
+    private com.github.lgooddatepicker.components.TimePicker startingTime;
     // End of variables declaration//GEN-END:variables
 }

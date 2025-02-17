@@ -19,6 +19,13 @@
         </resource>
      </resources>
 </build>
+    <repositories>
+        <repository>
+            <id>unknown-jars-temp-repo</id>
+            <name>A temporary repository created by NetBeans for libraries and jars it could not identify. Please replace the dependencies in this repository with correct ones and delete this repository.</name>
+            <url>file:${project.basedir}/lib</url>
+        </repository>
+    </repositories>
     <dependencies>
         <dependency>
             <groupId>com.toedter</groupId>
@@ -30,6 +37,11 @@
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.36.0.3</version> <!-- Use the latest version available -->
+        </dependency>
+        <dependency>
+            <artifactId>LGoodDatePicker</artifactId>
+            <groupId>com.github.lgooddatepicker</groupId>
+            <version>11.2.1</version>
         </dependency>
     </dependencies>
 </project>
