@@ -182,22 +182,24 @@ public class Schedule extends javax.swing.JPanel {
         appMaker.setAlwaysOnTop(false);
     }//GEN-LAST:event_addAppointmentButtonMouseClicked
 
-    public void updateCurrentAppointments(Object value){
-        // convert value from html to a day/thingyyy 
-        String type = calender.getButton();
-        for (Appointment appointment : Main.getInstance().getAppointmentManager().getAppointments()){
-            switch (type) {
-                case "Today":
-                    processToday(value, appointment, calendarCellSelected());
-                    break;
-                case "Week":
-                    processWeek(value, appointment, calendarCellSelected());
-                    break;
-                case "Month":
-                    processMonth(value, appointment, calendarCellSelected());
-                    break;
-            }
+    public void updateCalendarCellToAppointments(){
+        
+    }
+    
+    public void updateAppointmentPanel(Object value){
+        /*
+        
+        CURRENTLY ATTEMPTING DIFFERENT METHOD OF WHEN CALENDAR TABLE LOADS IT WILL 
+        System.out.println("Requesting to update: " + value);
+        if (value == null || value.toString().length() == 0){
+            return;
         }
+        
+        String data = value.toString();
+        
+        /*for (Appointment appointment : Main.getInstance().getAppointmentManager().getAppointmentsByDay(null)){
+            
+        }*/
     }
 
     public int getLastSelectedRow() {
@@ -206,30 +208,6 @@ public class Schedule extends javax.swing.JPanel {
 
     public int getLastSelectedColumn() {
         return lastSelectedColumn;
-    }
-    
-    private void processToday(Object value, Appointment appointment, boolean isCellSelected){
-        if (isCellSelected){
-            
-        }else{
-            
-        }
-    }
-    
-    private void processWeek(Object value, Appointment appointment, boolean isCellSelected){
-        if (isCellSelected){
-            
-        }else{
-            
-        }
-    }
-    
-    private void processMonth(Object value, Appointment appointment, boolean isCellSelected){
-        if (isCellSelected){
-            
-        }else{
-            
-        }
     }
     
     private boolean calendarCellSelected(){

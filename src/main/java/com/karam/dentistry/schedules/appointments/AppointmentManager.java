@@ -7,7 +7,10 @@ package com.karam.dentistry.schedules.appointments;
 import com.karam.dentistry.Main;
 import com.karam.dentistry.data.Patient;
 import com.karam.dentistry.schedules.Schedule;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -32,7 +35,38 @@ public class AppointmentManager {
         }
         
         appointments.add(appointment);
-        Main.getInstance().getSchedule().updateCurrentAppointments(value);
+        System.out.println("ADDED");
+       // Main.getInstance().getSchedule().updateCalendarCellToAppointments();
+       // NOT IDEAL BUT  FOR NOW ITS OK
+        Main.getInstance().getSchedule().getCalender().format();
+        Main.getInstance().getSchedule().updateAppointmentPanel(value);
+    }
+    
+    public List<Appointment> getAppointmentsForDay(Calendar foreignCalendarr, Object value){
+        Calendar localCalendar = (Calendar) foreignCalendarr.clone();
+
+        String rawValue = value.toString();
+        String dayStr = rawValue.replaceAll("<[^>]+>", "").trim();
+        int day;
+        try {
+            day = Integer.parseInt(dayStr);
+        } catch (NumberFormatException ex) {
+            System.err.println("Unable to parse day from value: " + rawValue);
+            return new ArrayList<>(); // return an empty list if parsing fails.
+        }
+        
+        List<Appointment> condensedList = new ArrayList<Appointment>();
+        for (Appointment appt : appointments){
+            Calendar apptCalendar = Calendar.getInstance();
+            apptCalendar.setTime(appt.getAppointmentDate());
+            
+            if (apptCalendar.get(Calendar.MONTH) == localCalendar.get(Calendar.MONTH) &&
+                    apptCalendar.get(Calendar.YEAR) == localCalendar.get(Calendar.YEAR) && 
+                    apptCalendar.get(Calendar.DAY_OF_MONTH) == day){
+                condensedList.add(appt);
+            }
+        }
+        return condensedList;
     }
 
     public List<Appointment> getAppointments() {

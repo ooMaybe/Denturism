@@ -5,11 +5,14 @@
 package com.karam.dentistry.schedules;
 
 import com.karam.dentistry.Main;
+import com.karam.dentistry.data.Patient;
+import com.karam.dentistry.schedules.appointments.Appointment;
 import java.awt.Color;
 import java.awt.Component;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -65,17 +68,9 @@ public class Calender extends javax.swing.JPanel {
         if (selectedRow != -1 && selectedColumn != -1) { // Ensure a valid selection
             Object value = calendarTable.getValueAt(selectedRow, selectedColumn);
             
-            if (selectedButton.equals("Today")){
-                
-            }else if (selectedButton.equals("Week")){
-                
-            }else if (selectedButton.equals("Month")){
-                
-            }
-            
             Main.getInstance().getSchedule().setLastSelectedColumn(selectedColumn);
             Main.getInstance().getSchedule().setLastSelectedRow(selectedRow);
-            Main.getInstance().getSchedule().updateCurrentAppointments(value);
+            Main.getInstance().getSchedule().updateAppointmentPanel(value);
         }
     }
 
@@ -93,7 +88,6 @@ public class Calender extends javax.swing.JPanel {
         dateLabel = new javax.swing.JLabel();
         backButton = new javax.swing.JButton();
         nextButton = new javax.swing.JButton();
-        todayButton = new javax.swing.JButton();
         weekButton = new javax.swing.JButton();
         monthButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
@@ -125,16 +119,6 @@ public class Calender extends javax.swing.JPanel {
             }
         });
 
-        todayButton.setBackground(new java.awt.Color(150, 50, 100));
-        todayButton.setFont(new java.awt.Font("Tw Cen MT", 1, 12)); // NOI18N
-        todayButton.setForeground(java.awt.Color.white);
-        todayButton.setText("TODAY");
-        todayButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                todayButtonMouseClicked(evt);
-            }
-        });
-
         weekButton.setBackground(new java.awt.Color(150, 50, 100));
         weekButton.setFont(new java.awt.Font("Tw Cen MT", 1, 12)); // NOI18N
         weekButton.setForeground(java.awt.Color.white);
@@ -161,18 +145,16 @@ public class Calender extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(todayButton)
-                .addGap(6, 6, 6)
                 .addComponent(weekButton, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(monthButton)
-                .addGap(91, 91, 91)
+                .addGap(169, 169, 169)
                 .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(dateLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,13 +164,9 @@ public class Calender extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(11, 11, 11)
-                            .addComponent(todayButton))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(11, 11, 11)
-                            .addComponent(weekButton))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(11, 11, 11)
-                            .addComponent(monthButton))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(monthButton)
+                                .addComponent(weekButton)))
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(10, 10, 10)
                             .addComponent(dateLabel))
@@ -279,9 +257,7 @@ public class Calender extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void nextButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nextButtonMouseClicked
-        if (selectedButton.equals("Today")){
-            day += 1;
-        }else if (selectedButton.equals("Week")){
+        if (selectedButton.equals("Week")){
             day += 7;
             if (day >= calendar.getActualMaximum(Calendar.DAY_OF_MONTH)){
                 month += 1;
@@ -300,9 +276,7 @@ public class Calender extends javax.swing.JPanel {
     }//GEN-LAST:event_nextButtonMouseClicked
 
     private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
-        if (selectedButton.equals("Today")){
-            day -= 1;
-        }else if (selectedButton.equals("Week")){
+        if (selectedButton.equals("Week")){
             day -= 7;
         }else if (selectedButton.equals("Month")){
             month -= 1;
@@ -321,11 +295,6 @@ public class Calender extends javax.swing.JPanel {
     }//GEN-LAST:event_backButtonMouseClicked
 
    
-    private void todayButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_todayButtonMouseClicked
-        selectedButton = "Today";
-        updateButtons();
-    }//GEN-LAST:event_todayButtonMouseClicked
-
     private void weekButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_weekButtonMouseClicked
         selectedButton = "Week";
         updateButtons();
@@ -340,7 +309,6 @@ public class Calender extends javax.swing.JPanel {
         Color unselected = new Color(150,50,100);
         Color selected = new Color(60,30,30);
         
-        todayButton.setBackground(selectedButton.equals("Today") ? selected : unselected);
         weekButton.setBackground(selectedButton.equals("Week") ? selected : unselected);
         monthButton.setBackground(selectedButton.equals("Month") ? selected : unselected);
         
@@ -380,11 +348,35 @@ public class Calender extends javax.swing.JPanel {
                             model.setValueAt("", row, column);
                         } else if (dayCounter <= daysInMonth) {
                             // Fill current month's days
+                            StringBuilder cellContent = new StringBuilder();
+                            cellContent.append("<html>");
+                            // Highlight the selected day if desired.
                             if (dayCounter == day && month == Calendar.getInstance().get(Calendar.MONTH)) {
-                                model.setValueAt("<html><b><span style='background-color:yellow;'>" + dayCounter + "</span></b></html>", row, column);
+                                cellContent.append("<b><span style='background-color:yellow;'>" + dayCounter + "</span></b>");
                             } else {
-                                model.setValueAt("<html><b>" + dayCounter + "</b></html>", row, column);
+                                cellContent.append("<b>" + dayCounter + "</b>");
                             }
+                            // some html parsing for colors 
+                            List<Appointment> appointments = Main.getInstance().getAppointmentManager().getAppointmentsForDay(calendar, dayCounter);
+                            if (appointments != null && !appointments.isEmpty()) {
+                                for (Appointment appt : appointments) {
+                                    // Use a colored bullet based on the appointment type.
+                                    System.out.println("Reached here :/");
+                                    
+                                    Patient patient = Main.getInstance().getDataManager().getPatientByID(appt.getPatientID());
+                                    String patientName = (patient != null)
+                                            ? patient.getFirstName() + " " + patient.getLastName()
+                                            : "Unknown";
+
+                                    // Use the appointment type color if available; default to gray otherwise.
+                                    String color = (appt.getType() != null) ? appt.getType().getColor() : "gray";
+                                    cellContent.append("<br><span style='color:" + color + ";'>" + patientName + "</span>");
+                                }
+                            }
+                            cellContent.append("</html>");
+                
+                            // Set the cell's value to the built HTML string.
+                            model.setValueAt(cellContent.toString(), row, column);
                             dayCounter++;
                         } else {
                             // Empty after last day
@@ -428,6 +420,10 @@ public class Calender extends javax.swing.JPanel {
     public JTable getCalendarTable(){
         return calendarTable;
     }
+
+    public Calendar getCalendarObject() {
+        return calendar;
+    }
     
     public String getButton(){
         return selectedButton;
@@ -443,7 +439,6 @@ public class Calender extends javax.swing.JPanel {
     private javax.swing.JButton monthButton;
     private javax.swing.JButton nextButton;
     private javax.swing.JLabel nextLabel;
-    private javax.swing.JButton todayButton;
     private javax.swing.JButton weekButton;
     // End of variables declaration//GEN-END:variables
 }

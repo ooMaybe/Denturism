@@ -5,6 +5,8 @@
 package com.karam.dentistry.schedules.appointments;
 
 import com.karam.dentistry.data.Patient;
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.Date;
 
 import java.util.UUID;
@@ -20,13 +22,16 @@ public class Appointment {
     private Date appointmentDate;
     private AppointmentType type;
     private String additionalNotes;
+    private Duration duration;
     
-    public Appointment(UUID patientID, Date appointmentDate, AppointmentType type, String additionalNotes){
+    public Appointment(UUID patientID, Date appointmentDate, AppointmentType type, String additionalNotes, LocalTime startingTime, LocalTime endingTime){
         this.appointmentID = UUID.randomUUID().toString();
         this.patientID = patientID.toString();
         this.appointmentDate = appointmentDate;
         this.type = type;
         this.additionalNotes = additionalNotes;
+        this.duration = Duration.between(startingTime, endingTime);
+
     }
 
     public String getAppointmentID() {
@@ -67,6 +72,10 @@ public class Appointment {
 
     public void setAdditionalNotes(String additionalNotes) {
         this.additionalNotes = additionalNotes;
+    }
+    
+    public Duration getDuration() {
+        return duration;
     }
     
 }

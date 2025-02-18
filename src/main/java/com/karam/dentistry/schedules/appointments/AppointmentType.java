@@ -30,10 +30,11 @@ public enum AppointmentType {
         return color;
     }
     
-    public static AppointmentType find(String type){
-        return Arrays.asList(AppointmentType.values())
-                .stream()
-                .filter(appType -> appType.equals(type.replace(" ", "_")))
-                .findFirst().orElse(null);
+    public static AppointmentType find(String type) {
+        String normalized = type.trim().replace(" ", "_").toUpperCase();
+        return Arrays.stream(AppointmentType.values())
+                     .filter(appType -> appType.name().equals(normalized))
+                     .findFirst()
+                     .orElse(null);
     }
 }

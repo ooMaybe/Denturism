@@ -12,8 +12,10 @@ import com.karam.dentistry.data.Patient;
 import com.karam.dentistry.schedules.appointments.Appointment;
 import com.karam.dentistry.schedules.appointments.AppointmentType;
 import java.lang.reflect.Field;
+import java.time.Duration;
 import java.time.LocalTime;
 import java.util.Calendar;
+import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -27,6 +29,7 @@ public class AppointmentMaker extends javax.swing.JFrame {
     /**
      * Creates new form AppointmentMaker
      */
+    
     public AppointmentMaker() {
         initComponents();
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -172,14 +175,20 @@ public class AppointmentMaker extends javax.swing.JFrame {
             return;
         }
         
-        AppointmentType appointmentType = AppointmentType.find(appointmentTypeSelector.getSelectedItem().toString());
+        String rawText = appointmentTypeSelector.getSelectedItem().toString();
+        rawText = rawText.split(" - ")[0].trim().toUpperCase().replace(" ", "_");
+                
+        AppointmentType appointmentType = AppointmentType.find(rawText);
+        System.out.println("And now its: " + appointmentType);
         String additionalNotes = notesArea.getText();
+        Date appointmentDate = getDate();
         
-        Appointment appointment = null;//new Appointment(patient.getUid(), appointmentType, additionalNotes);
+        Appointment appointment = new Appointment(patient.getUid(), appointmentDate, appointmentType, additionalNotes, startingTime.getTime(), endingTime.getTime());
         Main.getInstance().getAppointmentManager().addAppointment(appointment);
         
         try{
             JOptionPane.showMessageDialog(null, "Sucessfully added the appointment uid=" + patient.getUid(), "Sucess!", JOptionPane.OK_OPTION);
+            this.dispose();
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Failed to add the appointment uid=" + patient.getUid(), "Error!", JOptionPane.OK_OPTION);
             e.printStackTrace();
@@ -190,6 +199,26 @@ public class AppointmentMaker extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_cancelAppointmentMouseClicked
 
+    private Date getDate(){
+        Calendar calendar = (Calendar) Main.getInstance().getSchedule().getCalender().getCalendarObject().clone();
+        int selectedRow = Main.getInstance().getSchedule().getLastSelectedRow();
+        int selectedColumn = Main.getInstance().getSchedule().getLastSelectedColumn();
+        
+        // since it comes out with weird html tags, we wanna remove those
+        String rawValue = Main.getInstance().getSchedule().getCalender().getCalendarTable().getValueAt(selectedRow, selectedColumn).toString();
+        String dayStr = rawValue.replaceAll("<[^>]+>", "").trim(); // regex code by chatgpt not me
+    
+        java.util.regex.Matcher m = java.util.regex.Pattern.compile("^(\\d+)").matcher(dayStr);
+        if (!m.find()) {
+            throw new NumberFormatException("No valid day found in: " + dayStr);
+        }
+
+        String finalCopy = m.group(1);
+        int day = Integer.parseInt(finalCopy);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        return calendar.getTime();
+    }
+    
     public void loadAppointments(){
         patientSelector.removeAllItems();
         for (Patient patient : Main.getInstance().getDataManager().getPatients()){
@@ -200,10 +229,6 @@ public class AppointmentMaker extends javax.swing.JFrame {
         for (AppointmentType type : AppointmentType.values()){
             appointmentTypeSelector.addItem(type.toString().replace("_", " ") + " - " + type.getColor());
         }
-    }
-    
-    private Calendar fromCalendar(){
-        return null;
     }
     
 

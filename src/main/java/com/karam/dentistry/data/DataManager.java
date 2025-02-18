@@ -207,6 +207,12 @@ public class DataManager {
                 .findFirst().orElse(null); // grabs the first available patient from the list otherwise returrn a null
     }
     
+    public Patient getPatientByID(String ID){
+        return getPatients().stream()
+                .filter(p -> p.getUid().toString().equals(ID))
+                .findFirst().orElse(null);
+    }
+    
     public ArrayList<Patient> getPatients() {
         return patients;
     }
