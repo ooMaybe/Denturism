@@ -183,10 +183,9 @@ public class AppointmentMaker extends javax.swing.JFrame {
         String additionalNotes = notesArea.getText();
         Date appointmentDate = getDate();
         
-        Appointment appointment = new Appointment(patient.getUid(), appointmentDate, appointmentType, additionalNotes, startingTime.getTime(), endingTime.getTime());
-        Main.getInstance().getAppointmentManager().addAppointment(appointment);
-        
         try{
+            Appointment appointment = new Appointment(patient.getUid(), appointmentDate, appointmentType, additionalNotes, startingTime.getTime(), endingTime.getTime());
+            Main.getInstance().getAppointmentManager().addAppointment(appointment);
             JOptionPane.showMessageDialog(null, "Sucessfully added the appointment uid=" + patient.getUid(), "Sucess!", JOptionPane.OK_OPTION);
             this.dispose();
         }catch(Exception e){

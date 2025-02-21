@@ -6,6 +6,8 @@ package com.karam.dentistry.schedules;
 
 import com.karam.dentistry.Main;
 import com.karam.dentistry.schedules.appointments.Appointment;
+import java.util.Calendar;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -186,10 +188,7 @@ public class Schedule extends javax.swing.JPanel {
         
     }
     
-    public void updateAppointmentPanel(Object value){
-        /*
-        
-        CURRENTLY ATTEMPTING DIFFERENT METHOD OF WHEN CALENDAR TABLE LOADS IT WILL 
+    public void updateAppointmentPanel(Calendar calendar, Object value){
         System.out.println("Requesting to update: " + value);
         if (value == null || value.toString().length() == 0){
             return;
@@ -197,9 +196,15 @@ public class Schedule extends javax.swing.JPanel {
         
         String data = value.toString();
         
-        /*for (Appointment appointment : Main.getInstance().getAppointmentManager().getAppointmentsByDay(null)){
+        List<Appointment> appointments = Main.getInstance().getAppointmentManager().getAppointmentsForDay(calendar, null);
+        if (appointments.isEmpty()){
+            return;
+        }
+        
+        for (Appointment appointment : appointments){
             
-        }*/
+        }
+        
     }
 
     public int getLastSelectedRow() {

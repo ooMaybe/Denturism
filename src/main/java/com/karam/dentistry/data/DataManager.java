@@ -4,6 +4,7 @@
  */
 package com.karam.dentistry.data;
 
+import com.karam.dentistry.schedules.appointments.Appointment;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -77,6 +78,12 @@ public class DataManager {
                         + " insuranceTelephone TEXT)");
                 System.out.println("Sucessfully created the patients table.");
                 
+                query(QueryType.POST, 
+                        "CREATE TABLE IF NOT EXISTS appointments("
+                        + " apptID PRIMARY KEY,"
+                        + " patientID TEXT,"
+                        + " "
+                        + ")")
                 load();
             }
         } catch (Exception e) {
@@ -137,7 +144,11 @@ public class DataManager {
         }
     }
     
-    public void insertPatient(Patient patient) {
+    public void addAppointmentToDatabase(Appointment appointment){
+        
+    }
+    
+    public void addPatientToDatabase(Patient patient) {
         String query = "INSERT INTO patients (" +
                 "uid, firstName, lastName, dob, gender, nationality, citizenship, email, " +
                 "address, city, streetNumber, province, postalCode, phoneNumber, " +

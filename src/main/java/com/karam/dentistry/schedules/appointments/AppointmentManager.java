@@ -10,6 +10,7 @@ import com.karam.dentistry.schedules.Schedule;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -38,8 +39,9 @@ public class AppointmentManager {
         System.out.println("ADDED");
        // Main.getInstance().getSchedule().updateCalendarCellToAppointments();
        // NOT IDEAL BUT  FOR NOW ITS OK
-        Main.getInstance().getSchedule().getCalender().format();
-        Main.getInstance().getSchedule().updateAppointmentPanel(value);
+        //Main.getInstance().getSchedule().getCalender().format();
+        Main.getInstance().getDataManager().addAppointmentToDatabase(appointment);
+        Main.getInstance().getSchedule().updateAppointmentPanel(Main.getInstance().getSchedule().getCalender().getCalendarObject(), value);
     }
     
     public List<Appointment> getAppointmentsForDay(Calendar foreignCalendarr, Object value){
@@ -66,7 +68,11 @@ public class AppointmentManager {
                 condensedList.add(appt);
             }
         }
-        return condensedList;
+        return sortByTime(condensedList);
+    }
+    
+    private List<Appointment> sortByTime(List<Appointment> appointments){
+        return appointments.stream().sorted(Comparator.comparing(Appointment::getStartingTime)).toList();
     }
 
     public List<Appointment> getAppointments() {
