@@ -7,6 +7,7 @@ package com.karam.dentistry;
 import com.karam.dentistry.schedules.Calender;
 import com.karam.dentistry.Services;
 import com.karam.dentistry.customer.Customer;
+import com.karam.dentistry.customer.CustomerManager;
 import com.karam.dentistry.data.DataManager;
 import com.karam.dentistry.schedules.Schedule;
 import com.karam.dentistry.schedules.appointments.AppointmentManager;
@@ -25,9 +26,9 @@ public class Main extends javax.swing.JFrame {
     private static Main instance = null;
     
     private DataManager dataManager;
+    private CustomerManager customerManager;
     private AppointmentManager appointmentManager;
     
-    private Services services;
     private Schedule schedule;
     private Customer customer;
     
@@ -39,17 +40,15 @@ public class Main extends javax.swing.JFrame {
         
         instance = this;
         
-        dataManager = new DataManager();
+        customerManager = new CustomerManager();
         appointmentManager = new AppointmentManager();
         
-        services = new Services();
+        dataManager = new DataManager();
+        
         schedule = new Schedule();
         customer = new Customer();
         
-        mainPanel.add(services);
-        /*       
-        below is temporary "tab switch" to schedule tab
-        */
+        // Starts off the application with the schedules tab
         scheduleButtonMouseClicked(null);
     }
 
@@ -64,8 +63,6 @@ public class Main extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        servicesButton = new javax.swing.JLabel();
-        servicesBar = new javax.swing.JPanel();
         scheduleButton = new javax.swing.JLabel();
         scheduleBar = new javax.swing.JPanel();
         customerButton = new javax.swing.JLabel();
@@ -85,31 +82,6 @@ public class Main extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(35, 35, 35));
 
-        servicesButton.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
-        servicesButton.setForeground(java.awt.Color.white);
-        servicesButton.setText("SERVICES");
-        servicesButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                servicesButtonMouseClicked(evt);
-            }
-        });
-
-        servicesBar.setBackground(new java.awt.Color(150, 50, 100));
-        servicesBar.setMaximumSize(new java.awt.Dimension(98, 5));
-        servicesBar.setMinimumSize(new java.awt.Dimension(98, 5));
-        servicesBar.setPreferredSize(new java.awt.Dimension(0, 5));
-
-        javax.swing.GroupLayout servicesBarLayout = new javax.swing.GroupLayout(servicesBar);
-        servicesBar.setLayout(servicesBarLayout);
-        servicesBarLayout.setHorizontalGroup(
-            servicesBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        servicesBarLayout.setVerticalGroup(
-            servicesBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 5, Short.MAX_VALUE)
-        );
-
         scheduleButton.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
         scheduleButton.setForeground(java.awt.Color.white);
         scheduleButton.setText("SCHEDULE");
@@ -119,8 +91,8 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        scheduleBar.setMaximumSize(new java.awt.Dimension(131, 5));
-        scheduleBar.setMinimumSize(new java.awt.Dimension(131, 5));
+        scheduleBar.setMaximumSize(new java.awt.Dimension(104, 5));
+        scheduleBar.setMinimumSize(new java.awt.Dimension(104, 5));
         scheduleBar.setName(""); // NOI18N
         scheduleBar.setPreferredSize(new java.awt.Dimension(0, 5));
 
@@ -128,11 +100,11 @@ public class Main extends javax.swing.JFrame {
         scheduleBar.setLayout(scheduleBarLayout);
         scheduleBarLayout.setHorizontalGroup(
             scheduleBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 104, Short.MAX_VALUE)
         );
         scheduleBarLayout.setVerticalGroup(
             scheduleBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 5, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         customerButton.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
@@ -150,7 +122,7 @@ public class Main extends javax.swing.JFrame {
         customerBar.setLayout(customerBarLayout);
         customerBarLayout.setHorizontalGroup(
             customerBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 137, Short.MAX_VALUE)
         );
         customerBarLayout.setVerticalGroup(
             customerBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,37 +134,27 @@ public class Main extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(servicesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 98, Short.MAX_VALUE)
-                    .addComponent(servicesBar, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(scheduleButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(scheduleBar, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE))
+                    .addComponent(scheduleBar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(customerButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(customerBar, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE))
-                .addContainerGap(495, Short.MAX_VALUE))
+                    .addComponent(customerBar, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(650, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(servicesButton)
-                            .addComponent(scheduleButton))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(servicesBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(scheduleBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(customerButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(customerBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(customerButton)
+                    .addComponent(scheduleButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(customerBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(scheduleBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -235,17 +197,6 @@ public class Main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void servicesButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_servicesButtonMouseClicked
-        mainPanel.removeAll();
-        mainPanel.add(services);
-        mainPanel.repaint();
-        mainPanel.revalidate();
-        
-        servicesBar.setBackground(highlightedColor);
-        scheduleBar.setBackground(normalColor);
-        customerBar.setBackground(normalColor);
-    }//GEN-LAST:event_servicesButtonMouseClicked
-
     private void scheduleButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_scheduleButtonMouseClicked
         mainPanel.removeAll();
         mainPanel.add(schedule);
@@ -253,7 +204,6 @@ public class Main extends javax.swing.JFrame {
         mainPanel.repaint();
         mainPanel.revalidate();
         
-        servicesBar.setBackground(normalColor);
         scheduleBar.setBackground(highlightedColor);
         customerBar.setBackground(normalColor);
     }//GEN-LAST:event_scheduleButtonMouseClicked
@@ -264,7 +214,6 @@ public class Main extends javax.swing.JFrame {
         mainPanel.repaint();
         mainPanel.revalidate();
         
-        servicesBar.setBackground(normalColor);
         scheduleBar.setBackground(normalColor);
         customerBar.setBackground(highlightedColor);
         
@@ -317,9 +266,9 @@ public class Main extends javax.swing.JFrame {
     public AppointmentManager getAppointmentManager(){
         return appointmentManager;
     }
-    
-    public Services getServices() {
-        return services;
+
+    public CustomerManager getCustomerManager() {
+        return customerManager;
     }
 
     public Schedule getSchedule() {
@@ -338,7 +287,5 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel scheduleBar;
     private javax.swing.JLabel scheduleButton;
-    private javax.swing.JPanel servicesBar;
-    private javax.swing.JLabel servicesButton;
     // End of variables declaration//GEN-END:variables
 }

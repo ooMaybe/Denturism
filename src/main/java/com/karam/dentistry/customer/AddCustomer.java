@@ -6,6 +6,7 @@ package com.karam.dentistry.customer;
 
 import com.karam.dentistry.Main;
 import com.karam.dentistry.data.Patient;
+import com.karam.dentistry.utilities.ImageUtils;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
@@ -32,14 +33,14 @@ public class AddCustomer extends javax.swing.JFrame {
     
     public AddCustomer() {
         initComponents();
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        
         UID = UUID.randomUUID();
         uidTextField.setText(UID.toString());
         
         // resize image
         Image image = ((ImageIcon) profilePicture.getIcon()).getImage();
-        profilePicture.setIcon(scaleImage(image, 72, 72));
-        
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        profilePicture.setIcon(ImageUtils.scaleImage(image, 72, 72));    
     }
 
     /**
@@ -86,10 +87,10 @@ public class AddCustomer extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         addressSelector = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
-        uploadPictureButton1 = new javax.swing.JButton();
+        uploadPictureButton = new javax.swing.JButton();
         streetNumberSelectorr = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
-        removePictureButton1 = new javax.swing.JButton();
+        removePictureButton = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         insuranceCompanySelector = new javax.swing.JTextField();
@@ -111,7 +112,7 @@ public class AddCustomer extends javax.swing.JFrame {
         uidTextField.setEditable(false);
         uidTextField.setText("jTextField1");
         jPanel1.add(uidTextField);
-        uidTextField.setBounds(41, 112, 257, 22);
+        uidTextField.setBounds(41, 112, 260, 22);
 
         jLabel1.setFont(new java.awt.Font("Sans Serif Collection", 1, 12)); // NOI18N
         jLabel1.setText("UID");
@@ -238,14 +239,14 @@ public class AddCustomer extends javax.swing.JFrame {
         jPanel1.add(jLabel19);
         jLabel19.setBounds(10, 320, 300, 30);
 
-        uploadPictureButton1.setText("UPLOAD PICTURE");
-        uploadPictureButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                uploadPictureButton1ActionPerformed(evt);
+        uploadPictureButton.setText("UPLOAD PICTURE");
+        uploadPictureButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                uploadPictureButtonMouseClicked(evt);
             }
         });
-        jPanel1.add(uploadPictureButton1);
-        uploadPictureButton1.setBounds(6, 79, 135, 23);
+        jPanel1.add(uploadPictureButton);
+        uploadPictureButton.setBounds(6, 79, 135, 23);
         jPanel1.add(streetNumberSelectorr);
         streetNumberSelectorr.setBounds(110, 380, 200, 22);
 
@@ -254,14 +255,14 @@ public class AddCustomer extends javax.swing.JFrame {
         jPanel1.add(jLabel23);
         jLabel23.setBounds(60, 350, 49, 20);
 
-        removePictureButton1.setText("REMOVE PICTURE");
-        removePictureButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removePictureButton1ActionPerformed(evt);
+        removePictureButton.setText("REMOVE PICTURE");
+        removePictureButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                removePictureButtonMouseClicked(evt);
             }
         });
-        jPanel1.add(removePictureButton1);
-        removePictureButton1.setBounds(147, 79, 159, 23);
+        jPanel1.add(removePictureButton);
+        removePictureButton.setBounds(147, 79, 150, 23);
 
         jLabel6.setFont(new java.awt.Font("Sans Serif Collection", 1, 14)); // NOI18N
         jLabel6.setText("INSURANCE");
@@ -335,20 +336,6 @@ public class AddCustomer extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void uploadPictureButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uploadPictureButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_uploadPictureButton1ActionPerformed
-
-    private void removePictureButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removePictureButton1ActionPerformed
-
-        try {
-            Image image = (Image) ImageIO.read(Main.class.getResourceAsStream("/images/smile.png"));
-            profilePicture.setIcon(scaleImage(image, 72, 72));
-        } catch (IOException ex) {
-            Logger.getLogger(AddCustomer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_removePictureButton1ActionPerformed
-
     private void registerPatientButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerPatientButtonMousePressed
         // TODO add your handling code here:
         
@@ -367,6 +354,9 @@ public class AddCustomer extends javax.swing.JFrame {
         patient.setCitizenship(this.citizenshipSelector.getText());
         patient.setEmail(this.emailSelector.getText());
         
+        Image image = ((ImageIcon) profilePicture.getIcon()).getImage();
+        patient.setProfilePicture(image);
+        
         // addrress
         patient.setAddress(this.addressSelector.getText());
         patient.setCity(this.citySelector.getText());
@@ -381,53 +371,48 @@ public class AddCustomer extends javax.swing.JFrame {
         patient.setIdNumber(this.insuranceNumberSelector.getText());
         patient.setCompanyTelephone(this.insuranceTelephoneSelector.getText());
         
-        Main.getInstance().getDataManager().insertPatient(patient);
+        Main.getInstance().getDataManager().addPatientToDatabase(patient);
         Main.getInstance().getCustomer().refreshTable();
         
-        
-        JOptionPane.showMessageDialog(null, "Sucessfully added the patient uid=" + patient.getUid(), "Sucess!", JOptionPane.OK_OPTION);
         this.dispose();
     }//GEN-LAST:event_registerPatientButtonMousePressed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddCustomer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddCustomer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddCustomer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddCustomer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void uploadPictureButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_uploadPictureButtonMouseClicked
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Select profile picture image");
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AddCustomer().setVisible(true);
+        // add a filter to allow only PNG and JPG files
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files (*.png, *.jpg, *jpeg)", "png", "jpg", "jpeg");
+        fileChooser.setFileFilter(filter);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.setMultiSelectionEnabled(false);
+
+        // shows the menu and waits for user input
+        int result = fileChooser.showOpenDialog(this);
+
+        // Check if the user selected file is an image
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File chosenFile = fileChooser.getSelectedFile();
+            try {
+                Image image = ImageIO.read(chosenFile);
+                profilePicture.setIcon(ImageUtils.scaleImage(image, 72, 72));
+                JOptionPane.showMessageDialog(null, "Successfully set the profile picture to " + chosenFile.getName(), "Success!", JOptionPane.OK_OPTION);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Failed to set the profile picture to " + chosenFile.getName(), "Error!", JOptionPane.OK_OPTION);
             }
-        });
-    }
-    
-    private ImageIcon scaleImage(Image image, int x, int y){
-        Image newimg = image.getScaledInstance(72, 72, java.awt.Image.SCALE_SMOOTH);
-        return new ImageIcon(newimg);
-    }
+        }
+    }//GEN-LAST:event_uploadPictureButtonMouseClicked
+
+    private void removePictureButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removePictureButtonMouseClicked
+        try {
+            Image image = (Image) ImageIO.read(getClass().getResource("/com/karam/dentistry/images/smile.png"));
+            profilePicture.setIcon(ImageUtils.scaleImage(image, 72, 72));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Failed to set the profile picture to the default image.", "Error!", JOptionPane.OK_OPTION);
+        }
+    }//GEN-LAST:event_removePictureButtonMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField addressSelector;
@@ -474,9 +459,9 @@ public class AddCustomer extends javax.swing.JFrame {
     private javax.swing.JLabel profilePicture;
     private javax.swing.JTextField provinceSelector;
     private javax.swing.JButton registerPatientButton;
-    private javax.swing.JButton removePictureButton1;
+    private javax.swing.JButton removePictureButton;
     private javax.swing.JTextField streetNumberSelectorr;
     private javax.swing.JTextField uidTextField;
-    private javax.swing.JButton uploadPictureButton1;
+    private javax.swing.JButton uploadPictureButton;
     // End of variables declaration//GEN-END:variables
 }

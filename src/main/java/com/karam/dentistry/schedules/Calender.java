@@ -70,7 +70,7 @@ public class Calender extends javax.swing.JPanel {
             
             Main.getInstance().getSchedule().setLastSelectedColumn(selectedColumn);
             Main.getInstance().getSchedule().setLastSelectedRow(selectedRow);
-            Main.getInstance().getSchedule().updateAppointmentPanel(value);
+            Main.getInstance().getSchedule().updateAppointmentPanel(calendar, value);
         }
     }
 
@@ -340,46 +340,26 @@ public class Calender extends javax.swing.JPanel {
 
                 int dayCounter = 1;
 
-                // Fill in the month
                 for (int row = 0; row < 6; row++) {
                     for (int column = 0; column < 7; column++) {
                         if (row == 0 && column < firstDayOfWeek) {
-                            // Empty cells before first day
+                            // empty cells before the first day
                             model.setValueAt("", row, column);
                         } else if (dayCounter <= daysInMonth) {
-                            // Fill current month's days
                             StringBuilder cellContent = new StringBuilder();
                             cellContent.append("<html>");
-                            // Highlight the selected day if desired.
+                            // checks if today's date matches with the calendar object's date, if so make the cell yellow indicating today's day, otherwise leave it bolded
                             if (dayCounter == day && month == Calendar.getInstance().get(Calendar.MONTH)) {
                                 cellContent.append("<b><span style='background-color:yellow;'>" + dayCounter + "</span></b>");
                             } else {
                                 cellContent.append("<b>" + dayCounter + "</b>");
                             }
-                            // some html parsing for colors 
-                            List<Appointment> appointments = Main.getInstance().getAppointmentManager().getAppointmentsForDay(calendar, dayCounter);
-                            if (appointments != null && !appointments.isEmpty()) {
-                                for (Appointment appt : appointments) {
-                                    // Use a colored bullet based on the appointment type.
-                                    System.out.println("Reached here :/");
-                                    
-                                    Patient patient = Main.getInstance().getDataManager().getPatientByID(appt.getPatientID());
-                                    String patientName = (patient != null)
-                                            ? patient.getFirstName() + " " + patient.getLastName()
-                                            : "Unknown";
-
-                                    // Use the appointment type color if available; default to gray otherwise.
-                                    String color = (appt.getType() != null) ? appt.getType().getColor() : "gray";
-                                    cellContent.append("<br><span style='color:" + color + ";'>" + patientName + "</span>");
-                                }
-                            }
                             cellContent.append("</html>");
                 
-                            // Set the cell's value to the built HTML string.
                             model.setValueAt(cellContent.toString(), row, column);
                             dayCounter++;
                         } else {
-                            // Empty after last day
+                            // empty after last day
                             model.setValueAt("", row, column);
                         }
                     }

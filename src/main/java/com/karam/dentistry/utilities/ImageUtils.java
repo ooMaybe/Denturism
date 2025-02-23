@@ -1,0 +1,72 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.karam.dentistry.utilities;
+
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+
+/**
+ *
+ * @author karam
+ */
+public class ImageUtils {
+    
+    public static ImageIcon scaleImage(Image image, int x, int y){
+        // scales the image to a 72 x 72 pixel image and returns the image as an icon
+        Image newimg = image.getScaledInstance(72, 72, java.awt.Image.SCALE_SMOOTH);
+        return new ImageIcon(newimg);
+    }
+    
+    public static Image bytesToImage(byte[] imageData){
+        if (imageData == null){
+            System.out.println("Failed to convert bytes into an image!");
+            return null;
+        }
+        
+        try{
+            ByteArrayInputStream bais = new ByteArrayInputStream(imageData);
+            Image image = ImageIO.read(bais);
+            return image;
+        }catch(Exception ex){
+            ex.printStackTrace();
+            System.out.println("Failed to convert bytes into an image!");
+            // returns an null image
+            return null;
+        }
+    }
+    
+    public static byte[] ImageToBytes(Image image){
+        try{
+            BufferedImage bufferedImage = new BufferedImage(
+                image.getWidth(null),
+                image.getHeight(null),
+                BufferedImage.TYPE_INT_ARGB
+            );
+            
+            Graphics2D graphics = bufferedImage.createGraphics();
+            // 0 x and y because we want it to be 
+            graphics.drawImage(image, 0, 0, null);
+            graphics.dispose();
+            
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            // writing the data of the buffered image into an array with a format of png
+            ImageIO.write(bufferedImage, "png", baos);
+            baos.flush();
+            byte[] imageBytes = baos.toByteArray();
+            baos.close();
+            return imageBytes;
+        }catch(Exception ex){
+            ex.printStackTrace();
+            System.out.println("Failed to convert image into an bytes!");
+            // this is practically an empty array with nothing
+            return new byte[0]; 
+        }
+    }
+}

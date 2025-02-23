@@ -194,9 +194,8 @@ public class Schedule extends javax.swing.JPanel {
             return;
         }
         
-        String data = value.toString();
-        
-        List<Appointment> appointments = Main.getInstance().getAppointmentManager().getAppointmentsForDay(calendar, null);
+        String data = value.toString();       
+        List<Appointment> appointments = Main.getInstance().getAppointmentManager().getAppointmentsForDay(calendar, data);
         if (appointments.isEmpty()){
             return;
         }

@@ -34,26 +34,21 @@ public class AppointmentManager {
             JOptionPane.showMessageDialog(null, "You must select a valid day in the calendar!", "Error!", JOptionPane.OK_OPTION);
             return;
         }
-        
-        appointments.add(appointment);
-        System.out.println("ADDED");
-       // Main.getInstance().getSchedule().updateCalendarCellToAppointments();
-       // NOT IDEAL BUT  FOR NOW ITS OK
-        //Main.getInstance().getSchedule().getCalender().format();
+
         Main.getInstance().getDataManager().addAppointmentToDatabase(appointment);
         Main.getInstance().getSchedule().updateAppointmentPanel(Main.getInstance().getSchedule().getCalender().getCalendarObject(), value);
     }
     
-    public List<Appointment> getAppointmentsForDay(Calendar foreignCalendarr, Object value){
+    public List<Appointment> getAppointmentsForDay(Calendar foreignCalendarr, String rawData){
         Calendar localCalendar = (Calendar) foreignCalendarr.clone();
-
-        String rawValue = value.toString();
-        String dayStr = rawValue.replaceAll("<[^>]+>", "").trim();
+        
+        // regex removes all the html tags from the cell's contents
+        String dayStr = rawData.replaceAll("<[^>]+>", "").trim(); 
         int day;
         try {
             day = Integer.parseInt(dayStr);
         } catch (NumberFormatException ex) {
-            System.err.println("Unable to parse day from value: " + rawValue);
+            System.err.println("Unable to parse day from value: " + rawData);
             return new ArrayList<>(); // return an empty list if parsing fails.
         }
         

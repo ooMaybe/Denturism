@@ -168,7 +168,7 @@ public class AppointmentMaker extends javax.swing.JFrame {
         }
         
         String patientName = patientSelector.getSelectedItem().toString();
-        Patient patient = Main.getInstance().getDataManager().getPatientByFullName(patientName);
+        Patient patient = Main.getInstance().getCustomerManager().getPatientByFullName(patientName);
         
         if (patient == null){
             JOptionPane.showMessageDialog(null, "Either you do not have any patients in your database or that one could not be found.", "Error!", JOptionPane.OK_OPTION);
@@ -220,7 +220,7 @@ public class AppointmentMaker extends javax.swing.JFrame {
     
     public void loadAppointments(){
         patientSelector.removeAllItems();
-        for (Patient patient : Main.getInstance().getDataManager().getPatients()){
+        for (Patient patient : Main.getInstance().getCustomerManager().getPatients()){
             patientSelector.addItem(patient.getFirstName() + " " + patient.getLastName());
         }
         

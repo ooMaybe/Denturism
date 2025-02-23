@@ -9,6 +9,7 @@ import com.karam.dentistry.customer.table.TableActionEvent;
 import com.karam.dentistry.customer.table.TableActionCellEditor;
 import com.karam.dentistry.Main;
 import com.karam.dentistry.data.Patient;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -27,7 +28,20 @@ public class Customer extends javax.swing.JPanel {
         TableActionEvent event = new TableActionEvent() {
             @Override
             public void onEdit(int row) {
-                System.out.println("Edit: " + row);
+                if (row == -1){
+                    JOptionPane.showMessageDialog(null, "You must select a valid patient from the table!", "Error!", JOptionPane.OK_OPTION);
+                    return;
+                }
+                
+                String patientID = patientTable.getValueAt(row, 0).toString();
+                Patient patient = Main.getInstance().getCustomerManager().getPatientByID(patientID);
+                if (patient == null){
+                    JOptionPane.showMessageDialog(null, "The patient you selected is nto valid. Please selecta valid one from the table!", "Error!", JOptionPane.OK_OPTION);                   
+                    return;
+                }
+                
+                ViewCustomer viewCustomer = new ViewCustomer(patient);
+                viewCustomer.setVisible(true);                
             }
         };
         patientTable.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRender());
@@ -162,12 +176,12 @@ public class Customer extends javax.swing.JPanel {
     
     public void refreshTable(){
         boolean isSearching = this.searchBox.getText().length() != 0;
-        int patientsSize = Main.getInstance().getDataManager().getPatients().size();
+        int patientsSize = Main.getInstance().getCustomerManager().getPatients().size();
         int maxPatients = isSearching ? patientsSize : Math.min(100, patientsSize);
         DefaultTableModel dm = (DefaultTableModel) patientTable.getModel();
         dm.setRowCount(0);
         for (int i = 0; i < maxPatients; i++){
-            Patient patient = Main.getInstance().getDataManager().getPatients().get(i);
+            Patient patient = Main.getInstance().getCustomerManager().getPatients().get(i);
             if (!isSearching){
                 addPatient(patient, i);
             }else{

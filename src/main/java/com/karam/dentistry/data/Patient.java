@@ -4,7 +4,9 @@
  */
 package com.karam.dentistry.data;
 
+import java.awt.Image;
 import java.util.UUID;
+import javax.swing.Icon;
 
 /**
  *
@@ -25,6 +27,7 @@ public class Patient {
     private String occupation;
     private String nationality;
     private String email;
+    private Image profilePicture;
     
     // Address
     private String address;
@@ -79,6 +82,10 @@ public class Patient {
     public void setEmail(String email) {
         this.email = email;
     }
+    
+    public void setProfilePicture(Image profilePicture) {
+        this.profilePicture = profilePicture;
+    }
 
     public void setAddress(String address) {
         this.address = address;
@@ -119,7 +126,7 @@ public class Patient {
     public void setCompanyTelephone(String companyTelephone) {
         this.companyTelephone = companyTelephone;
     }
-
+    
     public UUID getUid() {
         return uid;
     }
@@ -158,6 +165,10 @@ public class Patient {
 
     public String getEmail() {
         return email;
+    }
+
+    public Image getProfilePicture() {
+        return profilePicture;
     }
 
     public String getAddress() {
