@@ -89,4 +89,14 @@ public class Appointment {
         return endingTime;
     }
     
+    public String[] convertToDatabaseFormat(){
+        String[] stringBuilder = new String[];
+        stringBuilder[0] = "a";
+        
+    }
+    
+    public static Appointment fromDatabaseFormatToAppointment(String[] data){
+        
+    }
+    
 }

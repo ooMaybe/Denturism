@@ -82,8 +82,14 @@ public class DataManager {
                         "CREATE TABLE IF NOT EXISTS appointments("
                         + " apptID PRIMARY KEY,"
                         + " patientID TEXT,"
-                        + " "
-                        + ")")
+                        + " appointmentDate TEXT"
+                        + " appointmentType TEXT"
+                        + " additionalNotes TEXT"
+                        + " duration TEXT"
+                        + " startingTime TEXT"
+                        + " endingTime TEXT)");
+                System.out.println("Sucessfully created the appointments table.");
+                
                 load();
             }
         } catch (Exception e) {
@@ -145,7 +151,14 @@ public class DataManager {
     }
     
     public void addAppointmentToDatabase(Appointment appointment){
-        
+        String query = "INSERT INTO appointments ("
+                + "apptID, patientID, appointmentDate, appointmentType, additionalNotes, duration, startingTime, endingTime) VALUES ("
+                + "?, ?, ?, ?, ?, ?, ?, ?)";
+        try{
+            
+        }catch (Exception e){
+            
+        }
     }
     
     public void addPatientToDatabase(Patient patient) {
