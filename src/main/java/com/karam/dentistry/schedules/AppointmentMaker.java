@@ -16,6 +16,7 @@ import java.time.Duration;
 import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.UUID;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -163,7 +164,12 @@ public class AppointmentMaker extends javax.swing.JFrame {
 
     private void saveAppointmentButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveAppointmentButtonMouseClicked
         if (patientSelector.getSelectedItem() == null){
-            JOptionPane.showMessageDialog(null, "You do not have any patients selected! Please begin by adding a new patient.", "Error!", JOptionPane.OK_OPTION);
+            JOptionPane.showMessageDialog(this, "You do not have any patients selected! Please begin by adding a new patient.", "Error!", JOptionPane.OK_OPTION);
+            return;
+        }
+        
+        if (startingTime.getTime() == null || endingTime.getTime() == null){
+            JOptionPane.showMessageDialog(this, "You must select a valid starting and ending time!", "Error!", JOptionPane.OK_OPTION);            
             return;
         }
         
@@ -171,7 +177,7 @@ public class AppointmentMaker extends javax.swing.JFrame {
         Patient patient = Main.getInstance().getCustomerManager().getPatientByFullName(patientName);
         
         if (patient == null){
-            JOptionPane.showMessageDialog(null, "Either you do not have any patients in your database or that one could not be found.", "Error!", JOptionPane.OK_OPTION);
+            JOptionPane.showMessageDialog(this, "Either you do not have any patients in your database or that one could not be found.", "Error!", JOptionPane.OK_OPTION);
             return;
         }
         
@@ -179,17 +185,21 @@ public class AppointmentMaker extends javax.swing.JFrame {
         rawText = rawText.split(" - ")[0].trim().toUpperCase().replace(" ", "_");
                 
         AppointmentType appointmentType = AppointmentType.find(rawText);
-        System.out.println("And now its: " + appointmentType);
         String additionalNotes = notesArea.getText();
         Date appointmentDate = getDate();
         
         try{
-            Appointment appointment = new Appointment(patient.getUid(), appointmentDate, appointmentType, additionalNotes, startingTime.getTime(), endingTime.getTime());
+            Appointment appointment = new Appointment(UUID.randomUUID());
+            appointment.setPatientID(patient.getUid().toString());
+            appointment.setAppointmentDate(appointmentDate);
+            appointment.setType(appointmentType);
+            appointment.setAdditionalNotes(additionalNotes);
+            appointment.setStartingTime(startingTime.getTime());
+            appointment.setEndingTime(endingTime.getTime());
             Main.getInstance().getAppointmentManager().addAppointment(appointment);
-            JOptionPane.showMessageDialog(null, "Sucessfully added the appointment uid=" + patient.getUid(), "Sucess!", JOptionPane.OK_OPTION);
             this.dispose();
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Failed to add the appointment uid=" + patient.getUid(), "Error!", JOptionPane.OK_OPTION);
+            JOptionPane.showMessageDialog(this, "Failed to add the appointment uid=" + patient.getUid(), "Error!", JOptionPane.OK_OPTION);
             e.printStackTrace();
         }
     }//GEN-LAST:event_saveAppointmentButtonMouseClicked

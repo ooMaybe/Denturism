@@ -340,7 +340,7 @@ public class AddCustomer extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         if (dobSelector.getDate() == null){
-            JOptionPane.showMessageDialog(null, "You cannot have an empty date of birth!", "Error!", JOptionPane.OK_OPTION);
+            JOptionPane.showMessageDialog(this, "You cannot have an empty date of birth!", "Error!", JOptionPane.OK_OPTION);
             return;
         }
         
@@ -396,10 +396,10 @@ public class AddCustomer extends javax.swing.JFrame {
             try {
                 Image image = ImageIO.read(chosenFile);
                 profilePicture.setIcon(ImageUtils.scaleImage(image, 72, 72));
-                JOptionPane.showMessageDialog(null, "Successfully set the profile picture to " + chosenFile.getName(), "Success!", JOptionPane.OK_OPTION);
+                JOptionPane.showMessageDialog(this, "Successfully set the profile picture to " + chosenFile.getName(), "Success!", JOptionPane.OK_OPTION);
             } catch (IOException ex) {
                 ex.printStackTrace();
-                JOptionPane.showMessageDialog(null, "Failed to set the profile picture to " + chosenFile.getName(), "Error!", JOptionPane.OK_OPTION);
+                JOptionPane.showMessageDialog(this, "Failed to set the profile picture to " + chosenFile.getName(), "Error!", JOptionPane.OK_OPTION);
             }
         }
     }//GEN-LAST:event_uploadPictureButtonMouseClicked
@@ -410,7 +410,7 @@ public class AddCustomer extends javax.swing.JFrame {
             profilePicture.setIcon(ImageUtils.scaleImage(image, 72, 72));
         } catch (IOException ex) {
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Failed to set the profile picture to the default image.", "Error!", JOptionPane.OK_OPTION);
+            JOptionPane.showMessageDialog(this, "Failed to set the profile picture to the default image.", "Error!", JOptionPane.OK_OPTION);
         }
     }//GEN-LAST:event_removePictureButtonMouseClicked
 

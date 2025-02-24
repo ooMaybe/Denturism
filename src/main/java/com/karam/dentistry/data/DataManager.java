@@ -6,6 +6,7 @@ package com.karam.dentistry.data;
 
 import com.karam.dentistry.Main;
 import com.karam.dentistry.schedules.appointments.Appointment;
+import com.karam.dentistry.schedules.appointments.AppointmentType;
 import com.karam.dentistry.utilities.ImageUtils;
 import java.awt.Image;
 import java.io.File;
@@ -14,7 +15,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -44,7 +51,7 @@ public class DataManager {
                 String url = "jdbc:sqlite:" + databaseFile.getAbsolutePath();
                 conn = DriverManager.getConnection(url);
                 conn.setAutoCommit(true);
-                System.out.println("Connection to SQLLite has been established.");
+                System.out.println("You are now connected to the SQLLite database!");
                 
                 query(QueryType.POST,
                         "CREATE TABLE IF NOT EXISTS patients("
@@ -87,7 +94,7 @@ public class DataManager {
                 load();
             }
         } catch (Exception e) {
-            System.out.println("Failed to load mysql: " + e.getMessage());
+            System.out.println("Failed to load sqllite database!");
             e.printStackTrace();
         }
     }
@@ -97,17 +104,17 @@ public class DataManager {
             if (conn == null || conn.isClosed()) {
                 return false;
             }
+            return true;
         } catch (SQLException e) {
-            System.out.println("Failed to check if mysql is connected: " + e.getMessage());
+            e.printStackTrace();
+            System.out.println("Failed to check if sqllite is connected");
+            return false;
         }
-        return true;
     }
     
     private void load(){
-        try {
-            String patientLoadingQuery = "SELECT * FROM patients;";
-            
-            ResultSet patientResult = (ResultSet) query(QueryType.RESULT_SET, patientLoadingQuery);
+        try {           
+            ResultSet patientResult = (ResultSet) query(QueryType.RESULT_SET, "SELECT * FROM patients;");
             while (patientResult.next()){
                 Patient patient = new Patient(UUID.fromString(patientResult.getString("uid")));
                 
@@ -119,7 +126,7 @@ public class DataManager {
                 patient.setCitizenship(patientResult.getString("citizenship"));
                 patient.setEmail(patientResult.getString("email"));
                 
-                // image converrsion
+                // image conversion from bytes to the image
                 byte[] imageData = patientResult.getBytes("profilePicture");
                 Image image = ImageUtils.bytesToImage(imageData);
                 patient.setProfilePicture(image);
@@ -143,9 +150,34 @@ public class DataManager {
             }
             
             //  do another query for appointments
-            
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Failed to load patients database!", "Error!", JOptionPane.OK_OPTION);
+            ResultSet appointmentsResult = (ResultSet) query(QueryType.RESULT_SET, "SELECT * FROM appointments;");
+            while (appointmentsResult.next()){
+                UUID appointmentID = UUID.fromString(appointmentsResult.getString("apptID"));
+                String patientID = appointmentsResult.getString("patientID");
+                
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                Date appointmentDate = sdf.parse(appointmentsResult.getString("appointmentDate"));
+                
+                AppointmentType appointmentType = AppointmentType.find(appointmentsResult.getString("appointmentType"));
+                String additionalNotes = appointmentsResult.getString("additionalNotes");
+                
+                LocalTime startingTime = LocalTime.parse(appointmentsResult.getString("startingTime"));
+                LocalTime endingTime = LocalTime.parse(appointmentsResult.getString("endingTime"));
+                
+                Appointment appointment = new Appointment(appointmentID);
+                appointment.setPatientID(patientID);
+                appointment.setAppointmentDate(appointmentDate);
+                appointment.setType(appointmentType);
+                appointment.setAdditionalNotes(additionalNotes);
+                appointment.setStartingTime(startingTime);
+                appointment.setEndingTime(endingTime);
+                appointment.setDuration();
+                
+                Main.getInstance().getAppointmentManager().getAppointments().add(appointment);
+                System.out.println("Loaded the appointment uid=" + appointment.getAppointmentID());
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(Main.getInstance(), "Failed to load database!", "Error!", JOptionPane.OK_OPTION);
             ex.printStackTrace();
         }
     }
@@ -169,10 +201,10 @@ public class DataManager {
             
             if (rowsAffected > 0){ 
                 Main.getInstance().getAppointmentManager().getAppointments().add(appointment);
-                JOptionPane.showMessageDialog(null, "Sucessfully inserted the appointment id=" + appointment.getAppointmentID(), "Sucess!", JOptionPane.OK_OPTION);
+                JOptionPane.showMessageDialog(Main.getInstance(), "Sucessfully inserted the appointment id=" + appointment.getAppointmentID(), "Sucess!", JOptionPane.OK_OPTION);
                 System.out.println("Appointment record inserted successfully!");
             }else{
-                JOptionPane.showMessageDialog(null, "Failed to insert the appointment id=" + appointment.getAppointmentID(), "Error!", JOptionPane.OK_OPTION);
+                JOptionPane.showMessageDialog(Main.getInstance(), "Failed to insert the appointment id=" + appointment.getAppointmentID(), "Error!", JOptionPane.OK_OPTION);
                 System.out.println("Failed to insert the appointment with the id=" + appointment.getAppointmentID());
             }
         }catch (Exception e){
@@ -213,10 +245,10 @@ public class DataManager {
             
         if (rowsAffected > 0 ){ // SQL returns the number of rows that was affected during query. Having a number > 0 means that rows were changes and there was an update
             Main.getInstance().getCustomerManager().addPatient(patient);
-            JOptionPane.showMessageDialog(null, "Successfully inserted the patient id=" + patient.getUid(), "Success!", JOptionPane.OK_OPTION);
+            JOptionPane.showMessageDialog(Main.getInstance(), "Successfully inserted the patient id=" + patient.getUid(), "Success!", JOptionPane.OK_OPTION);
             System.out.println("Patient record inserted successfully!");
         }else{
-             JOptionPane.showMessageDialog(null, "Failed to insert the patient id=" + patient.getUid(), "Error!", JOptionPane.OK_OPTION);
+             JOptionPane.showMessageDialog(Main.getInstance(), "Failed to insert the patient id=" + patient.getUid(), "Error!", JOptionPane.OK_OPTION);
             System.out.println("Failed to insert the patient with the id=" + patient.getUid());
         }
     }
@@ -247,6 +279,7 @@ public class DataManager {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(Main.getInstance(), "An error occured when executing the sql command: " + query, "Error!", JOptionPane.OK_OPTION);
         }
         return null;
     }

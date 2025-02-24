@@ -27,15 +27,8 @@ public class Appointment {
     private LocalTime startingTime;
     private LocalTime endingTime;
     
-    public Appointment(UUID patientID, Date appointmentDate, AppointmentType type, String additionalNotes, LocalTime startingTime, LocalTime endingTime){
-        this.appointmentID = UUID.randomUUID().toString();
-        this.patientID = patientID.toString();
-        this.appointmentDate = appointmentDate;
-        this.type = type;
-        this.additionalNotes = additionalNotes;
-        this.duration = Duration.between(startingTime, endingTime);
-        this.startingTime = startingTime;
-        this.endingTime = endingTime;
+    public Appointment(UUID appointmentID){
+        this.appointmentID = appointmentID.toString();
     }
 
     public String getAppointmentID() {
@@ -81,6 +74,18 @@ public class Appointment {
     public Duration getDuration() {
         return duration;
     }
+    
+    public void setDuration(){
+        this.duration = Duration.between(startingTime, endingTime);
+    }
+
+    public void setStartingTime(LocalTime startingTime) {
+        this.startingTime = startingTime;
+    }
+    
+    public void setEndingTime(LocalTime endingTime) {
+        this.endingTime = endingTime;
+    }
 
     public LocalTime getStartingTime() {
         return startingTime;
@@ -110,10 +115,6 @@ public class Appointment {
         stringBuilder[6] = this.startingTime.toString(); 
         stringBuilder[7] = this.endingTime.toString();
         return stringBuilder;
-    }
-    
-    public static Appointment fromDatabaseFormatToAppointment(String[] data){
-        return null;
     }
     
 }

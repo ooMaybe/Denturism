@@ -29,14 +29,14 @@ public class Customer extends javax.swing.JPanel {
             @Override
             public void onEdit(int row) {
                 if (row == -1){
-                    JOptionPane.showMessageDialog(null, "You must select a valid patient from the table!", "Error!", JOptionPane.OK_OPTION);
+                    JOptionPane.showMessageDialog(Main.getInstance(), "You must select a valid patient from the table!", "Error!", JOptionPane.OK_OPTION);
                     return;
                 }
                 
                 String patientID = patientTable.getValueAt(row, 0).toString();
                 Patient patient = Main.getInstance().getCustomerManager().getPatientByID(patientID);
                 if (patient == null){
-                    JOptionPane.showMessageDialog(null, "The patient you selected is nto valid. Please selecta valid one from the table!", "Error!", JOptionPane.OK_OPTION);                   
+                    JOptionPane.showMessageDialog(Main.getInstance(), "The patient you selected is nto valid. Please selecta valid one from the table!", "Error!", JOptionPane.OK_OPTION);                   
                     return;
                 }
                 

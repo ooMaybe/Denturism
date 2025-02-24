@@ -31,7 +31,7 @@ public class AppointmentManager {
         Schedule schedule = Main.getInstance().getSchedule();
         Object value = schedule.getCalender().getCalendarTable().getValueAt(schedule.getLastSelectedRow(), schedule.getLastSelectedColumn());
         if (value == null || value.toString().length() == 0){
-            JOptionPane.showMessageDialog(null, "You must select a valid day in the calendar!", "Error!", JOptionPane.OK_OPTION);
+            JOptionPane.showMessageDialog(Main.getInstance(), "You must select a valid day in the calendar!", "Error!", JOptionPane.OK_OPTION);
             return;
         }
 
@@ -42,7 +42,6 @@ public class AppointmentManager {
     public List<Appointment> getAppointmentsForDay(Calendar foreignCalendarr, String rawData){
         Calendar localCalendar = (Calendar) foreignCalendarr.clone();
         
-        // regex removes all the html tags from the cell's contents
         String dayStr = rawData.replaceAll("<[^>]+>", "").trim(); 
         int day;
         try {
@@ -56,14 +55,17 @@ public class AppointmentManager {
         for (Appointment appt : appointments){
             Calendar apptCalendar = Calendar.getInstance();
             apptCalendar.setTime(appt.getAppointmentDate());
-            
+
             if (apptCalendar.get(Calendar.MONTH) == localCalendar.get(Calendar.MONTH) &&
                     apptCalendar.get(Calendar.YEAR) == localCalendar.get(Calendar.YEAR) && 
                     apptCalendar.get(Calendar.DAY_OF_MONTH) == day){
                 condensedList.add(appt);
             }
         }
-        return sortByTime(condensedList);
+        
+        List<Appointment> sortedList = sortByTime(condensedList);
+        System.out.println("Found " + sortedList.size() + " appointments for day " + day);     
+        return sortedList;
     }
     
     private List<Appointment> sortByTime(List<Appointment> appointments){

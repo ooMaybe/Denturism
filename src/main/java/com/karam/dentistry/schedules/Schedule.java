@@ -5,9 +5,11 @@
 package com.karam.dentistry.schedules;
 
 import com.karam.dentistry.Main;
+import com.karam.dentistry.data.Patient;
 import com.karam.dentistry.schedules.appointments.Appointment;
 import java.util.Calendar;
 import java.util.List;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 /**
@@ -32,6 +34,13 @@ public class Schedule extends javax.swing.JPanel {
         this.add(calender = new Calender()); // adds it to panel and instantiates at the same time.
         this.repaint();
         this.revalidate();
+        this.appointmentsList.setListData(new String[0]);
+        this.appointmentsList.addListSelectionListener(event -> {
+            // prevents more than one event calling
+            if (!event.getValueIsAdjusting()){
+                
+            }
+        });
     }
 
     /**
@@ -50,7 +59,8 @@ public class Schedule extends javax.swing.JPanel {
         jPanel3 = new javax.swing.JPanel();
         appointmentsPanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        scrollPane1 = new java.awt.ScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        appointmentsList = new javax.swing.JList<>();
         calender1 = new com.karam.dentistry.schedules.Calender();
 
         jButton1.setText("REMOVE APPOINTMENT");
@@ -96,16 +106,27 @@ public class Schedule extends javax.swing.JPanel {
         jLabel2.setForeground(java.awt.Color.white);
         jLabel2.setText("CURRENT APPOINTMENTS");
 
+        appointmentsList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        appointmentsList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(appointmentsList);
+
         javax.swing.GroupLayout appointmentsPanelLayout = new javax.swing.GroupLayout(appointmentsPanel);
         appointmentsPanel.setLayout(appointmentsPanelLayout);
         appointmentsPanelLayout.setHorizontalGroup(
             appointmentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(appointmentsPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(appointmentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(scrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addGroup(appointmentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(appointmentsPanelLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE))
+                    .addGroup(appointmentsPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1)))
+                .addContainerGap())
         );
         appointmentsPanelLayout.setVerticalGroup(
             appointmentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -113,7 +134,7 @@ public class Schedule extends javax.swing.JPanel {
                 .addGap(9, 9, 9)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -160,23 +181,21 @@ public class Schedule extends javax.swing.JPanel {
                     .addComponent(calender1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void addAppointmentButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addAppointmentButtonMouseClicked
         if (getLastSelectedRow() == -1 || getLastSelectedColumn() == -1) {
-            JOptionPane.showMessageDialog(null, "You must select a valid cell!", "Error!", JOptionPane.OK_OPTION);
+            JOptionPane.showMessageDialog(this, "You must select a valid cell!", "Error!", JOptionPane.OK_OPTION);
             return;
         }
         
         Object value = calender.getCalendarTable().getValueAt(getLastSelectedRow(), getLastSelectedColumn());
         if (value == null || value.toString().length() == 0){
-            JOptionPane.showMessageDialog(null, "You must select a valid day!", "Error!", JOptionPane.OK_OPTION);
+            JOptionPane.showMessageDialog(this, "You must select a valid day!", "Error!", JOptionPane.OK_OPTION);
             return;
         }
-        
-        System.out.println(value.toString());
         
         appMaker = new AppointmentMaker();
         appMaker.setVisible(true);
@@ -189,21 +208,29 @@ public class Schedule extends javax.swing.JPanel {
     }
     
     public void updateAppointmentPanel(Calendar calendar, Object value){
-        System.out.println("Requesting to update: " + value);
         if (value == null || value.toString().length() == 0){
             return;
         }
         
+        this.appointmentsList.setListData(new String[0]);
         String data = value.toString();       
         List<Appointment> appointments = Main.getInstance().getAppointmentManager().getAppointmentsForDay(calendar, data);
         if (appointments.isEmpty()){
             return;
         }
         
-        for (Appointment appointment : appointments){
-            
+        String[] appointmentsToAdd = new String[appointments.size()];
+        for (int i = 0; i < appointments.size(); i++){
+            Appointment appt = appointments.get(i);
+            Patient patient = Main.getInstance().getCustomerManager().getPatientByID(appt.getPatientID());
+            String builder = "•";
+            builder += patient.getFirstName() + " " + patient.getLastName();
+            builder += " @ " + appt.getStartingTime().getHour() + ":" + appt.getEndingTime().getMinute(); 
+            builder += " for " + appt.getType().name();
+            appointmentsToAdd[i] = builder;
         }
         
+        this.appointmentsList.setListData(appointmentsToAdd);
     }
 
     public int getLastSelectedRow() {
@@ -233,13 +260,14 @@ public class Schedule extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addAppointmentButton;
+    private javax.swing.JList<String> appointmentsList;
     private javax.swing.JPanel appointmentsPanel;
     private com.karam.dentistry.schedules.Calender calender1;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton printButton;
-    private java.awt.ScrollPane scrollPane1;
     // End of variables declaration//GEN-END:variables
 }
