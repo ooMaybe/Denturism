@@ -280,14 +280,25 @@ public class Main extends javax.swing.JFrame {
     public Customer getCustomer() {
         return customer;
     }
+    
+    // made this quick method to execute button for simplicity
+    public void executeButton(int i){
+        if (i == 0){
+            customerButtonMouseClicked(null);
+            scheduleButtonMouseClicked(null);
+        }else if (i == 1){
+            customerButtonMouseClicked(null);
+            scheduleButtonMouseClicked(null);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel customerBar;
-    private javax.swing.JLabel customerButton;
+    public javax.swing.JLabel customerButton;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel scheduleBar;
-    private javax.swing.JLabel scheduleButton;
+    public javax.swing.JLabel scheduleButton;
     // End of variables declaration//GEN-END:variables
 }

@@ -15,7 +15,7 @@ public enum AppointmentType {
     CONSULTATION("blue"),
     PRELIMINARY_IMPRESSION("green"),
     BITE_REGISTRATION("yellow"),
-    FINAL_IMPRESSION("pink"),
+    FINAL_IMPRESSION("white"),
     TRY_IN("brown"),
     DELIVERY("orange"),
     EMERGENCY("red");

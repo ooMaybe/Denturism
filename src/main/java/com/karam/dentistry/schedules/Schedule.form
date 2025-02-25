@@ -57,10 +57,8 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="addAppointmentButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="116" max="-2" attributes="0"/>
-                  <Component id="printButton" min="-2" pref="162" max="-2" attributes="0"/>
-                  <EmptySpace pref="270" max="32767" attributes="0"/>
+                  <Component id="removeAppointmentButton" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="548" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -69,8 +67,7 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="printButton" alignment="3" max="-2" attributes="0"/>
-                      <Component id="jButton1" alignment="3" max="-2" attributes="0"/>
+                      <Component id="removeAppointmentButton" alignment="3" max="-2" attributes="0"/>
                       <Component id="addAppointmentButton" alignment="3" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -79,17 +76,14 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="removeAppointmentButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="REMOVE APPOINTMENT"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="printButton">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="PRINT SCHEDULE"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
-          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="removeAppointmentButtonMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="addAppointmentButton">
           <Properties>

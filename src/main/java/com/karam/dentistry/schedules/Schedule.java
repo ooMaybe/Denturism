@@ -42,8 +42,7 @@ public class Schedule extends javax.swing.JPanel {
         this.appointmentsList.setListData(new String[0]);
         this.appointmentsList.addListSelectionListener(event -> {
             // prevents more than one event calling
-            int selectedIndex = this.appointmentsList.getSelectedIndex();
-                
+            int selectedIndex = this.appointmentsList.getSelectedIndex();               
             if (selectedIndex == -1){
                 return;
             }    
@@ -76,8 +75,7 @@ public class Schedule extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        printButton = new javax.swing.JButton();
+        removeAppointmentButton = new javax.swing.JButton();
         addAppointmentButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         appointmentsPanel = new javax.swing.JPanel();
@@ -86,11 +84,13 @@ public class Schedule extends javax.swing.JPanel {
         appointmentsList = new javax.swing.JList<>();
         calender1 = new com.karam.dentistry.schedules.Calender();
 
-        jButton1.setText("REMOVE APPOINTMENT");
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        printButton.setText("PRINT SCHEDULE");
-        printButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        removeAppointmentButton.setText("REMOVE APPOINTMENT");
+        removeAppointmentButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        removeAppointmentButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                removeAppointmentButtonMouseClicked(evt);
+            }
+        });
 
         addAppointmentButton.setText("ADD APPOINTMENT");
         addAppointmentButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -107,18 +107,15 @@ public class Schedule extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(addAppointmentButton)
                 .addGap(16, 16, 16)
-                .addComponent(jButton1)
-                .addGap(116, 116, 116)
-                .addComponent(printButton, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(270, Short.MAX_VALUE))
+                .addComponent(removeAppointmentButton)
+                .addContainerGap(548, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(printButton)
-                    .addComponent(jButton1)
+                    .addComponent(removeAppointmentButton)
                     .addComponent(addAppointmentButton))
                 .addContainerGap())
         );
@@ -226,6 +223,24 @@ public class Schedule extends javax.swing.JPanel {
         appMaker.setAlwaysOnTop(false);
     }//GEN-LAST:event_addAppointmentButtonMouseClicked
 
+    private void removeAppointmentButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeAppointmentButtonMouseClicked
+        if (getLastSelectedRow() == -1 || getLastSelectedColumn() == -1) {
+            JOptionPane.showMessageDialog(this, "You must select a valid cell!", "Error!", JOptionPane.OK_OPTION);
+            return;
+        }
+        
+        int selectedIndex = this.appointmentsList.getSelectedIndex();               
+        if (selectedIndex == -1){
+            JOptionPane.showMessageDialog(this, "You must have a valid appointment selected from the appointment panel!", "Error!", JOptionPane.OK_OPTION);
+            return;
+        }    
+        
+        String appointmentId = appointmentsIds.get(selectedIndex);
+        if (selectedIndex >= 0 && appointmentId != null) {
+            Main.getInstance().getAppointmentManager().remove(appointmentId);
+        }
+    }//GEN-LAST:event_removeAppointmentButtonMouseClicked
+
     public void updateAppointmentPanel(Calendar calendar, Object value){
         if (value == null || value.toString().length() == 0){
             return;
@@ -241,7 +256,7 @@ public class Schedule extends javax.swing.JPanel {
         appointmentsIds.clear();
         
         String[] appointmentsToAdd = new String[appointments.size()];
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("h:m a");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("hh:mm a");
         for (int i = 0; i < appointments.size(); i++){
             Appointment appt = appointments.get(i);
             Patient patient = Main.getInstance().getCustomerManager().getPatientByID(appt.getPatientID());
@@ -288,11 +303,10 @@ public class Schedule extends javax.swing.JPanel {
     private javax.swing.JList<String> appointmentsList;
     private javax.swing.JPanel appointmentsPanel;
     private com.karam.dentistry.schedules.Calender calender1;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton printButton;
+    private javax.swing.JButton removeAppointmentButton;
     // End of variables declaration//GEN-END:variables
 }

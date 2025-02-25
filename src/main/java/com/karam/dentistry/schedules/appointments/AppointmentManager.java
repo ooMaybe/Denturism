@@ -6,6 +6,7 @@ package com.karam.dentistry.schedules.appointments;
 
 import com.karam.dentistry.Main;
 import com.karam.dentistry.data.Patient;
+import com.karam.dentistry.data.QueryType;
 import com.karam.dentistry.schedules.Schedule;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,6 +39,10 @@ public class AppointmentManager {
 
         Main.getInstance().getDataManager().addAppointmentToDatabase(appointment);
         Main.getInstance().getSchedule().updateAppointmentPanel(Main.getInstance().getSchedule().getCalender().getCalendarObject(), value);
+    }
+    
+    public void removeAppointment(String appointmentId){
+        
     }
     
     public List<Appointment> getAppointmentsForDay(Calendar foreignCalendarr, String rawData){
@@ -86,6 +91,26 @@ public class AppointmentManager {
 
     public List<Appointment> getAppointments() {
         return appointments;
+    }
+
+    public void remove(String appointmentId) {
+        try{
+            int rows = (Integer) Main.getInstance().getDataManager().query(QueryType.POST, "DELETE FROM appointments WHERE apptId=?", appointmentId);           
+            if (rows < 0){
+                JOptionPane.showMessageDialog(Main.getInstance(), "Failed to remove the appointment id=" + appointmentId + " from the database!", "Error!", JOptionPane.OK_OPTION);
+                return;
+            }
+            
+            boolean removed = appointments.removeIf(appt -> appt.getAppointmentID().equals(appointmentId));
+            if (removed) {
+                JOptionPane.showMessageDialog(Main.getInstance(), "Sucessfully removeD the appointment " + appointmentId + "from the list!", "Success!", JOptionPane.OK_OPTION);
+            } else {
+                JOptionPane.showMessageDialog(Main.getInstance(), "Failed to remove the appointment from the list id=" + appointmentId, "Error!", JOptionPane.OK_OPTION);
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(Main.getInstance(), "Failed to remove the appointment id=" + appointmentId, "Error!", JOptionPane.OK_OPTION);
+        }
     }
     
 }

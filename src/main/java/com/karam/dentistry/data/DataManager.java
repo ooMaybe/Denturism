@@ -155,7 +155,7 @@ public class DataManager {
                 UUID appointmentID = UUID.fromString(appointmentsResult.getString("apptID"));
                 String patientID = appointmentsResult.getString("patientID");
                 
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 Date appointmentDate = sdf.parse(appointmentsResult.getString("appointmentDate"));
                 
                 AppointmentType appointmentType = AppointmentType.find(appointmentsResult.getString("appointmentType"));
