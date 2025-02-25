@@ -10,6 +10,7 @@ import com.karam.dentistry.utilities.ImageUtils;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -65,8 +66,6 @@ public class AddCustomer extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         genderSelectorr = new javax.swing.JComboBox<>();
-        middleNameSelector = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         occupationSelector = new javax.swing.JTextField();
         nationalitySelector = new javax.swing.JTextField();
@@ -128,15 +127,19 @@ public class AddCustomer extends javax.swing.JFrame {
         });
         jPanel1.add(registerPatientButton);
         registerPatientButton.setBounds(430, 13, 220, 80);
+
+        firstNameSelector.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jPanel1.add(firstNameSelector);
-        firstNameSelector.setBounds(100, 170, 210, 22);
+        firstNameSelector.setBounds(100, 170, 210, 20);
 
         jLabel2.setFont(new java.awt.Font("Sans Serif Collection", 1, 12)); // NOI18N
         jLabel2.setText("First Name");
         jPanel1.add(jLabel2);
         jLabel2.setBounds(30, 170, 70, 20);
+
+        lastNameSelector.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jPanel1.add(lastNameSelector);
-        lastNameSelector.setBounds(101, 200, 210, 22);
+        lastNameSelector.setBounds(101, 200, 210, 20);
 
         jLabel3.setFont(new java.awt.Font("Sans Serif Collection", 1, 12)); // NOI18N
         jLabel3.setText("Last Name");
@@ -158,41 +161,42 @@ public class AddCustomer extends javax.swing.JFrame {
         genderSelectorr.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Male", "Female", "Not Specified" }));
         jPanel1.add(genderSelectorr);
         genderSelectorr.setBounds(100, 260, 207, 22);
-        jPanel1.add(middleNameSelector);
-        middleNameSelector.setBounds(420, 170, 230, 22);
-
-        jLabel7.setFont(new java.awt.Font("Sans Serif Collection", 1, 12)); // NOI18N
-        jLabel7.setText("Middle Name");
-        jPanel1.add(jLabel7);
-        jLabel7.setBounds(340, 170, 80, 20);
 
         jLabel8.setFont(new java.awt.Font("Sans Serif Collection", 1, 12)); // NOI18N
         jLabel8.setText("Occupation");
         jPanel1.add(jLabel8);
-        jLabel8.setBounds(350, 200, 70, 20);
+        jLabel8.setBounds(350, 170, 70, 20);
+
+        occupationSelector.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jPanel1.add(occupationSelector);
-        occupationSelector.setBounds(420, 200, 230, 22);
+        occupationSelector.setBounds(420, 170, 230, 22);
+
+        nationalitySelector.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jPanel1.add(nationalitySelector);
-        nationalitySelector.setBounds(420, 230, 230, 22);
+        nationalitySelector.setBounds(420, 200, 230, 20);
 
         jLabel9.setFont(new java.awt.Font("Sans Serif Collection", 1, 12)); // NOI18N
         jLabel9.setText("Nationality");
         jPanel1.add(jLabel9);
-        jLabel9.setBounds(350, 230, 70, 20);
+        jLabel9.setBounds(350, 200, 70, 20);
 
         jLabel10.setFont(new java.awt.Font("Sans Serif Collection", 1, 12)); // NOI18N
         jLabel10.setText("Phone Number");
         jPanel1.add(jLabel10);
         jLabel10.setBounds(330, 410, 90, 20);
+
+        phoneNumberSelector.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jPanel1.add(phoneNumberSelector);
-        phoneNumberSelector.setBounds(420, 410, 230, 22);
+        phoneNumberSelector.setBounds(420, 410, 230, 20);
+
+        emailSelector.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jPanel1.add(emailSelector);
-        emailSelector.setBounds(420, 260, 230, 22);
+        emailSelector.setBounds(420, 230, 230, 20);
 
         jLabel11.setFont(new java.awt.Font("Sans Serif Collection", 1, 12)); // NOI18N
         jLabel11.setText("Email");
         jPanel1.add(jLabel11);
-        jLabel11.setBounds(380, 260, 40, 20);
+        jLabel11.setBounds(380, 230, 40, 20);
 
         jLabel12.setFont(new java.awt.Font("Sans Serif Collection", 1, 14)); // NOI18N
         jLabel12.setText("PERSONAL INFORMATION");
@@ -202,25 +206,33 @@ public class AddCustomer extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Sans Serif Collection", 1, 12)); // NOI18N
         jLabel13.setText("Citizenship");
         jPanel1.add(jLabel13);
-        jLabel13.setBounds(30, 290, 70, 20);
+        jLabel13.setBounds(350, 260, 70, 20);
+
+        citizenshipSelector.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jPanel1.add(citizenshipSelector);
-        citizenshipSelector.setBounds(100, 290, 210, 22);
+        citizenshipSelector.setBounds(420, 260, 230, 20);
 
         jLabel14.setFont(new java.awt.Font("Sans Serif Collection", 1, 12)); // NOI18N
         jLabel14.setText("Province");
         jPanel1.add(jLabel14);
         jLabel14.setBounds(50, 410, 60, 20);
+
+        provinceSelector.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jPanel1.add(provinceSelector);
-        provinceSelector.setBounds(110, 410, 200, 22);
+        provinceSelector.setBounds(110, 410, 200, 20);
 
         jLabel15.setFont(new java.awt.Font("Sans Serif Collection", 1, 12)); // NOI18N
         jLabel15.setText("Postal Code");
         jPanel1.add(jLabel15);
         jLabel15.setBounds(330, 380, 70, 20);
+
+        postalCodeSelectorr.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jPanel1.add(postalCodeSelectorr);
-        postalCodeSelectorr.setBounds(410, 380, 240, 22);
+        postalCodeSelectorr.setBounds(410, 380, 240, 20);
+
+        citySelector.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jPanel1.add(citySelector);
-        citySelector.setBounds(410, 350, 240, 22);
+        citySelector.setBounds(410, 350, 240, 20);
 
         jLabel17.setFont(new java.awt.Font("Sans Serif Collection", 1, 12)); // NOI18N
         jLabel17.setText("City");
@@ -231,8 +243,10 @@ public class AddCustomer extends javax.swing.JFrame {
         jLabel18.setText("Street Number");
         jPanel1.add(jLabel18);
         jLabel18.setBounds(20, 380, 90, 20);
+
+        addressSelector.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jPanel1.add(addressSelector);
-        addressSelector.setBounds(110, 350, 200, 22);
+        addressSelector.setBounds(110, 350, 200, 20);
 
         jLabel19.setFont(new java.awt.Font("Sans Serif Collection", 1, 14)); // NOI18N
         jLabel19.setText("ADDRESS");
@@ -247,8 +261,10 @@ public class AddCustomer extends javax.swing.JFrame {
         });
         jPanel1.add(uploadPictureButton);
         uploadPictureButton.setBounds(6, 79, 135, 23);
+
+        streetNumberSelectorr.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jPanel1.add(streetNumberSelectorr);
-        streetNumberSelectorr.setBounds(110, 380, 200, 22);
+        streetNumberSelectorr.setBounds(110, 380, 200, 20);
 
         jLabel23.setFont(new java.awt.Font("Sans Serif Collection", 1, 12)); // NOI18N
         jLabel23.setText("Address");
@@ -270,14 +286,22 @@ public class AddCustomer extends javax.swing.JFrame {
         jLabel16.setFont(new java.awt.Font("Sans Serif Collection", 1, 12)); // NOI18N
         jLabel16.setText("Company Name");
 
+        insuranceCompanySelector.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+
         jLabel20.setFont(new java.awt.Font("Sans Serif Collection", 1, 12)); // NOI18N
         jLabel20.setText("ID NUMBER");
+
+        insuranceNumberSelector.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
 
         jLabel21.setFont(new java.awt.Font("Sans Serif Collection", 1, 12)); // NOI18N
         jLabel21.setText("Company Telephone");
 
+        insuranceEmployerSelector.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+
         jLabel22.setFont(new java.awt.Font("Sans Serif Collection", 1, 12)); // NOI18N
         jLabel22.setText("Employer");
+
+        insuranceTelephoneSelector.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -330,7 +354,7 @@ public class AddCustomer extends javax.swing.JFrame {
                     .addComponent(insuranceNumberSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(insuranceTelephoneSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 14, Short.MAX_VALUE))
+                .addGap(0, 18, Short.MAX_VALUE))
         );
 
         pack();
@@ -344,16 +368,18 @@ public class AddCustomer extends javax.swing.JFrame {
             return;
         }
         
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy");
+        
         Patient patient = new Patient(UID);
         
         patient.setFirstName(this.firstNameSelector.getText());
         patient.setLastName(this.lastNameSelector.getText());
-        patient.setDob(this.dobSelector.getDate().toString());
+        patient.setDob(sdf.format(this.dobSelector.getDate()));
         patient.setGender(this.genderSelectorr.getSelectedItem().toString());
         patient.setNationality(this.nationalitySelector.getText());
         patient.setCitizenship(this.citizenshipSelector.getText());
         patient.setEmail(this.emailSelector.getText());
-        
+                
         Image image = ((ImageIcon) profilePicture.getIcon()).getImage();
         patient.setProfilePicture(image);
         
@@ -446,12 +472,10 @@ public class AddCustomer extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField lastNameSelector;
-    private javax.swing.JTextField middleNameSelector;
     private javax.swing.JTextField nationalitySelector;
     private javax.swing.JTextField occupationSelector;
     private javax.swing.JTextField phoneNumberSelector;

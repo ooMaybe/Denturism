@@ -18,6 +18,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 import javax.swing.BorderFactory;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 

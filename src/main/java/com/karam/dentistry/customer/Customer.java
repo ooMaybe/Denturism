@@ -9,6 +9,11 @@ import com.karam.dentistry.customer.table.TableActionEvent;
 import com.karam.dentistry.customer.table.TableActionCellEditor;
 import com.karam.dentistry.Main;
 import com.karam.dentistry.data.Patient;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -78,7 +83,7 @@ public class Customer extends javax.swing.JPanel {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "UID", "Full Name", "Age", "Gender", "Phone Number", "Action"
+                "UID", "Full Name", "Date of Birth", "Gender", "Phone Number", "Action"
             }
         ) {
             Class[] types = new Class [] {
@@ -183,22 +188,22 @@ public class Customer extends javax.swing.JPanel {
         for (int i = 0; i < maxPatients; i++){
             Patient patient = Main.getInstance().getCustomerManager().getPatients().get(i);
             if (!isSearching){
-                addPatient(patient, i);
+                addPatient(patient);
             }else{
                 switch (filterBox.getSelectedItem().toString()){
                     case "Patient First Name":
                         if (patient.getFirstName().contains(searchBox.getText())){
-                            addPatient(patient, i);
+                            addPatient(patient);
                         }
                         break;
                     case "Patient Last Name":
                         if (patient.getLastName().contains(searchBox.getText())){
-                            addPatient(patient, i);
+                            addPatient(patient);
                         }
                         break;
                     case "Patient UID":
                         if (patient.getUid().toString().contains(searchBox.getText())){
-                            addPatient(patient, i);
+                            addPatient(patient);
                         }
                         break;
                 }
@@ -206,7 +211,7 @@ public class Customer extends javax.swing.JPanel {
         }
     }
     
-    private void addPatient(Patient patient, int row){
+    private void addPatient(Patient patient){
         DefaultTableModel model = (DefaultTableModel) patientTable.getModel();
         model.addRow(new Object[] {
             patient.getUid(),

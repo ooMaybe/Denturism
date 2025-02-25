@@ -7,6 +7,8 @@ package com.karam.dentistry.schedules;
 import com.karam.dentistry.Main;
 import com.karam.dentistry.data.Patient;
 import com.karam.dentistry.schedules.appointments.Appointment;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.swing.JList;
@@ -26,6 +28,8 @@ public class Schedule extends javax.swing.JPanel {
     private int lastSelectedRow = -1;
     private int lastSelectedColumn = -1;
     
+    private ArrayList<String> appointmentsIds;
+    
     private AppointmentMaker appMaker;
     
     public Schedule() {
@@ -34,11 +38,30 @@ public class Schedule extends javax.swing.JPanel {
         this.add(calender = new Calender()); // adds it to panel and instantiates at the same time.
         this.repaint();
         this.revalidate();
+        this.appointmentsIds = new ArrayList<String>();
         this.appointmentsList.setListData(new String[0]);
         this.appointmentsList.addListSelectionListener(event -> {
             // prevents more than one event calling
-            if (!event.getValueIsAdjusting()){
+            int selectedIndex = this.appointmentsList.getSelectedIndex();
                 
+            if (selectedIndex == -1){
+                return;
+            }    
+                
+            // since the appointments is sorted, this would get the appointment id based on the selected index and therefore get the appointment
+            Appointment appointment = Main.getInstance().getAppointmentManager().getAppointment(appointmentsIds.get(selectedIndex));
+            if (selectedIndex >= 0 && appointment != null) {
+                String builder = "<html>";
+
+                boolean emptyNotes = appointment.getAdditionalNotes() == null || appointment.getAdditionalNotes().length() == 0;
+
+                // inline if statement to check if the notes are empty, it would display "empty notes" rather than simply "" or null
+                builder += "Additional Notes: <b>" + (emptyNotes ? "None" : appointment.getAdditionalNotes()) + "<b>";
+                builder += "</html>";
+
+                this.appointmentsList.setToolTipText(builder);
+            }else{
+                this.appointmentsList.setToolTipText(null);
             }
         });
     }
@@ -203,10 +226,6 @@ public class Schedule extends javax.swing.JPanel {
         appMaker.setAlwaysOnTop(false);
     }//GEN-LAST:event_addAppointmentButtonMouseClicked
 
-    public void updateCalendarCellToAppointments(){
-        
-    }
-    
     public void updateAppointmentPanel(Calendar calendar, Object value){
         if (value == null || value.toString().length() == 0){
             return;
@@ -219,15 +238,21 @@ public class Schedule extends javax.swing.JPanel {
             return;
         }
         
+        appointmentsIds.clear();
+        
         String[] appointmentsToAdd = new String[appointments.size()];
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("h:m a");
         for (int i = 0; i < appointments.size(); i++){
             Appointment appt = appointments.get(i);
             Patient patient = Main.getInstance().getCustomerManager().getPatientByID(appt.getPatientID());
             String builder = "•";
             builder += patient.getFirstName() + " " + patient.getLastName();
-            builder += " @ " + appt.getStartingTime().getHour() + ":" + appt.getEndingTime().getMinute(); 
+            builder += " @ " + appt.getStartingTime().format(dtf); 
             builder += " for " + appt.getType().name();
             appointmentsToAdd[i] = builder;
+            
+            // keeps track of current appointment Ids so that it can be used in the listener for tooltips
+            appointmentsIds.add(appt.getAppointmentID());
         }
         
         this.appointmentsList.setListData(appointmentsToAdd);

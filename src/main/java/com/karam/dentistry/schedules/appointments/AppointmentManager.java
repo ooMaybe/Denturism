@@ -13,6 +13,7 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 
 /**
@@ -66,6 +67,17 @@ public class AppointmentManager {
         List<Appointment> sortedList = sortByTime(condensedList);
         System.out.println("Found " + sortedList.size() + " appointments for day " + day);     
         return sortedList;
+    }
+    
+    public Appointment getAppointment(String appointmentID){
+        return appointments.stream().filter(app -> app.getAppointmentID().equals(appointmentID)).findFirst().orElse(null);
+    }
+    
+    public List<Appointment> getAppointmentsFor(Patient patient){
+       return appointments.stream()
+               .filter(appt -> appt.getPatientID().equals(patient.getUid().toString()))
+               .sorted(Comparator.comparing(Appointment::getAppointmentDate))
+               .collect(Collectors.toList());
     }
     
     private List<Appointment> sortByTime(List<Appointment> appointments){

@@ -100,20 +100,22 @@ public class Appointment {
         stringBuilder[0] = this.appointmentID;
         stringBuilder[1] = this.patientID;
         
-        SimpleDateFormat sdf = new SimpleDateFormat ("yyyy-MM-dd HH:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         
         // format the date into a string format that can later be unstringified
         stringBuilder[2] = sdf.format(this.appointmentDate); 
         stringBuilder[3] = this.type.name();
         stringBuilder[4] = this.additionalNotes;
         
-        // converts duration into minutes so that similar to appointment date, itt can be unstringified later.
-        stringBuilder[5] = String.valueOf(this.duration.toMinutes());
-        stringBuilder[6] = this.startingTime.toString();
-        
         // converts the local times into a string
         stringBuilder[6] = this.startingTime.toString(); 
         stringBuilder[7] = this.endingTime.toString();
+        
+        setDuration();
+        
+        // this might seem counter intuitive  because of the numbers however it must be last because duration is only set after starrting time and ending time is done
+        // converts duration into minutes so that similar to appointment date, itt can be unstringified later.
+        stringBuilder[5] = String.valueOf(this.duration.toMinutes());
         return stringBuilder;
     }
     
