@@ -4,8 +4,6 @@
  */
 package com.karam.dentistry;
 
-import com.karam.dentistry.schedules.Calender;
-import com.karam.dentistry.Services;
 import com.karam.dentistry.customer.Customer;
 import com.karam.dentistry.customer.CustomerManager;
 import com.karam.dentistry.data.DataManager;
@@ -13,16 +11,19 @@ import com.karam.dentistry.schedules.Schedule;
 import com.karam.dentistry.schedules.appointments.AppointmentManager;
 import java.awt.Color;
 
-/**
- *
- * @author Karam
- */
+/*
+* This is the main class. It is the starting point 
+* of the program when the jar file is executed.
+*/
+
 public class Main extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Main
-     */
-    
+    /*
+    * Below is the instantiation of a few classes. I decided to use a singleton pattern to
+    * ensure that there can only be one instance of this class. Most importantly, is the Main 
+    * instance since it allows other classes to use the main class which has 1 instance of 
+    * every managing class and ui element.
+    */
     private static Main instance = null;
     
     private DataManager dataManager;
@@ -32,6 +33,7 @@ public class Main extends javax.swing.JFrame {
     private Schedule schedule;
     private Customer customer;
     
+    // 
     private Color highlightedColor = new Color(150, 50, 100);
     private Color normalColor = new Color(242, 242, 242);
     
@@ -40,6 +42,9 @@ public class Main extends javax.swing.JFrame {
         
         instance = this;
         
+        /*
+        * Initializing classes that manage the customers, appointments, and database.
+        */
         customerManager = new CustomerManager();
         appointmentManager = new AppointmentManager();
         
@@ -48,7 +53,11 @@ public class Main extends javax.swing.JFrame {
         schedule = new Schedule();
         customer = new Customer();
         
-        // Starts off the application with the schedules tab
+        /* 
+        * Starts off the application with the schedules tab.
+        * I passed the parameter of null despite it taking in MouseEvent because the
+        * mouse event has no affect, I simply want to switch tabs.
+        */
         scheduleButtonMouseClicked(null);
     }
 
@@ -109,16 +118,16 @@ public class Main extends javax.swing.JFrame {
 
         customerButton.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
         customerButton.setForeground(java.awt.Color.white);
-        customerButton.setText("CUSTOMER");
+        customerButton.setText("CUSTOMERS");
         customerButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 customerButtonMouseClicked(evt);
             }
         });
 
-        customerBar.setMaximumSize(new java.awt.Dimension(115, 5));
-        customerBar.setMinimumSize(new java.awt.Dimension(115, 5));
-        customerBar.setPreferredSize(new java.awt.Dimension(115, 5));
+        customerBar.setMaximumSize(new java.awt.Dimension(125, 5));
+        customerBar.setMinimumSize(new java.awt.Dimension(125, 5));
+        customerBar.setPreferredSize(new java.awt.Dimension(125, 5));
 
         javax.swing.GroupLayout customerBarLayout = new javax.swing.GroupLayout(customerBar);
         customerBar.setLayout(customerBarLayout);
@@ -128,7 +137,7 @@ public class Main extends javax.swing.JFrame {
         );
         customerBarLayout.setVerticalGroup(
             customerBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 5, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -154,9 +163,9 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(customerButton)
                     .addComponent(scheduleButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scheduleBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(customerBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(scheduleBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(customerBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -199,10 +208,16 @@ public class Main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /*
+    * When the mouse clicks on the label "schedule", this method is executed.
+    * The event is irrelevant since it is not needed as long as the user clicks on it.
+    * It clears the main panel and adds the schedule UI on top of it. It also sets the 
+    * bar under the buttons to match their current state. If schedule button is pressed, itll 
+    * highlighted while the customer button 
+    */
     private void scheduleButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_scheduleButtonMouseClicked
         mainPanel.removeAll();
         mainPanel.add(schedule);
-        //mainPanel.add(new Calender());
         mainPanel.repaint();
         mainPanel.revalidate();
         
@@ -210,6 +225,10 @@ public class Main extends javax.swing.JFrame {
         customerBar.setBackground(normalColor);
     }//GEN-LAST:event_scheduleButtonMouseClicked
 
+    /*
+    * Same behaviour as the previous method except this one is with customer label
+    * It also refreshes the customers (patient) table which is on that menu.
+    */
     private void customerButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customerButtonMouseClicked
         mainPanel.removeAll();
         mainPanel.add(customer);
@@ -281,7 +300,16 @@ public class Main extends javax.swing.JFrame {
         return customer;
     }
     
-    // made this quick method to execute button for simplicity
+    /* 
+    * Made this quick method to execute button for simplicity.
+    * All it does is execute one of the buttons based on the number inputted.
+    * I decided to use this instead of the others to keep the other methods private.
+    * It does this by "refreshing" the current ui. By refreshing, I mean switching to
+    * the other ui and then switching back.
+    * Possible Cases: 
+    * when i = 0, it displays the customer ui and then settles on schedule ui. (this is used to refresh schedule ui)
+    * when i = 1, it displays the schedule ui and then settles on the customer ui. (this is used to refresh customers ui)
+    */
     public void executeButton(int i){
         if (i == 0){
             customerButtonMouseClicked(null);

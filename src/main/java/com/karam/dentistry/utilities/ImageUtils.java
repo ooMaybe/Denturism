@@ -12,14 +12,17 @@ import java.io.ByteArrayOutputStream;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
-/**
- *
- * @author karam
+/*
+ * The purpose of this class is to manage the profile pictures
+ * set for the patients. It can scale, and convert images to a
+ * database friendly format.
  */
 public class ImageUtils {
     
+    /* 
+    * Scales the image to a 72 x 72 pixel image and returns the image as an icon
+    */
     public static ImageIcon scaleImage(Image image, int x, int y){
-        // scales the image to a 72 x 72 pixel image and returns the image as an icon
         Image newimg = image.getScaledInstance(72, 72, java.awt.Image.SCALE_SMOOTH);
         return new ImageIcon(newimg);
     }
