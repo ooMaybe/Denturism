@@ -9,10 +9,9 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-/**
- *
- * @author Karam
- */
+/*
+* inspired by https://www.youtube.com/watch?v=RMwufjRRHBU&t=523s
+*/
 public class TableActionCellRender extends DefaultTableCellRenderer {
 
     @Override

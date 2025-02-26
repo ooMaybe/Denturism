@@ -40,6 +40,8 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         
+        this.setLocationRelativeTo(null);
+        
         instance = this;
         
         /*
@@ -152,7 +154,7 @@ public class Main extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(customerButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(customerBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(customerBar, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
                 .addContainerGap(672, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(

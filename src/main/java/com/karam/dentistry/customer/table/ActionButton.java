@@ -13,10 +13,9 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.border.EmptyBorder;
 
-/**
- *
- * @author Karam
- */
+/*
+* inspired by https://www.youtube.com/watch?v=RMwufjRRHBU&t=523s
+*/
 public class ActionButton extends JButton {
     
     private boolean mousePress;

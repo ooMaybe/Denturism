@@ -20,13 +20,17 @@ import javax.swing.ImageIcon;
 public class ImageUtils {
     
     /* 
-    * Scales the image to a 72 x 72 pixel image and returns the image as an icon
+    * Scales the image to a 72 x 72 pixel image and returns the image as an icon.
     */
     public static ImageIcon scaleImage(Image image, int x, int y){
         Image newimg = image.getScaledInstance(72, 72, java.awt.Image.SCALE_SMOOTH);
         return new ImageIcon(newimg);
     }
     
+    /*
+    * This method takes in bytes as a parameter and attempts to read in into an image.
+    * 
+    */
     public static Image bytesToImage(byte[] imageData){
         if (imageData == null){
             System.out.println("Failed to convert bytes into an image!");
@@ -40,11 +44,14 @@ public class ImageUtils {
         }catch(Exception ex){
             ex.printStackTrace();
             System.out.println("Failed to convert bytes into an image!");
-            // returns an null image
             return null;
         }
     }
     
+    /*
+    * This method converts the image into byte data. This is the "Blob" 
+    * that will be stored in the database. 
+    */
     public static byte[] ImageToBytes(Image image){
         try{
             BufferedImage bufferedImage = new BufferedImage(

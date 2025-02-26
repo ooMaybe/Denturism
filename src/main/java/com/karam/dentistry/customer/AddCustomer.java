@@ -130,37 +130,37 @@ public class AddCustomer extends javax.swing.JFrame {
 
         firstNameSelector.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jPanel1.add(firstNameSelector);
-        firstNameSelector.setBounds(100, 170, 210, 20);
+        firstNameSelector.setBounds(100, 170, 210, 30);
 
         jLabel2.setFont(new java.awt.Font("Sans Serif Collection", 1, 12)); // NOI18N
         jLabel2.setText("First Name");
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(30, 170, 70, 20);
+        jLabel2.setBounds(30, 170, 70, 30);
 
         lastNameSelector.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jPanel1.add(lastNameSelector);
-        lastNameSelector.setBounds(101, 200, 210, 20);
+        lastNameSelector.setBounds(100, 210, 210, 30);
 
         jLabel3.setFont(new java.awt.Font("Sans Serif Collection", 1, 12)); // NOI18N
         jLabel3.setText("Last Name");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(30, 200, 63, 20);
+        jLabel3.setBounds(30, 210, 63, 30);
         jPanel1.add(dobSelector);
-        dobSelector.setBounds(100, 230, 210, 22);
+        dobSelector.setBounds(100, 250, 210, 22);
 
         jLabel4.setFont(new java.awt.Font("Sans Serif Collection", 1, 12)); // NOI18N
         jLabel4.setText("Gender");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(50, 260, 50, 20);
+        jLabel4.setBounds(50, 280, 50, 20);
 
         jLabel5.setFont(new java.awt.Font("Sans Serif Collection", 1, 12)); // NOI18N
         jLabel5.setText("Date of Birth");
         jPanel1.add(jLabel5);
-        jLabel5.setBounds(20, 230, 75, 22);
+        jLabel5.setBounds(20, 250, 75, 22);
 
         genderSelectorr.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Male", "Female", "Not Specified" }));
         jPanel1.add(genderSelectorr);
-        genderSelectorr.setBounds(100, 260, 207, 22);
+        genderSelectorr.setBounds(100, 280, 207, 22);
 
         jLabel8.setFont(new java.awt.Font("Sans Serif Collection", 1, 12)); // NOI18N
         jLabel8.setText("Occupation");
@@ -339,8 +339,8 @@ public class AddCustomer extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -361,10 +361,14 @@ public class AddCustomer extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void registerPatientButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerPatientButtonMousePressed
-        // TODO add your handling code here:
-        
-        if (dobSelector.getDate() == null){
+       if (dobSelector.getDate() == null){
             JOptionPane.showMessageDialog(this, "You cannot have an empty date of birth!", "Error!", JOptionPane.OK_OPTION);
+            return;
+        }
+        
+        if (firstNameSelector.getText() == null ||  firstNameSelector.getText().length() == 0 || 
+                lastNameSelector.getText() == null ||  lastNameSelector.getText().length() == 0){
+            JOptionPane.showMessageDialog(this, "You cannot have an empty first or last name!", "Error!", JOptionPane.OK_OPTION);
             return;
         }
         

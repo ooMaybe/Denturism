@@ -14,22 +14,18 @@ import java.util.List;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Karam
+/*
+ * This class is the UI component for the schedule. It displays the parent which is the calendar
+ * alongside appointment management buttons
+ * 
  */
 public class Schedule extends javax.swing.JPanel {
-
-    /**
-     * Creates new form Schedule
-     */
     
     private Calender calender;
     private int lastSelectedRow = -1;
     private int lastSelectedColumn = -1;
     
     private ArrayList<String> appointmentsIds;
-    
     private AppointmentMaker appMaker;
     
     public Schedule() {
@@ -38,6 +34,7 @@ public class Schedule extends javax.swing.JPanel {
         this.add(calender = new Calender()); // adds it to panel and instantiates at the same time.
         this.repaint();
         this.revalidate();
+        
         this.appointmentsIds = new ArrayList<String>();
         this.appointmentsList.setListData(new String[0]);
         this.appointmentsList.addListSelectionListener(event -> {
@@ -78,11 +75,11 @@ public class Schedule extends javax.swing.JPanel {
         removeAppointmentButton = new javax.swing.JButton();
         addAppointmentButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
+        calender1 = new com.karam.dentistry.schedules.Calender();
         appointmentsPanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         appointmentsList = new javax.swing.JList<>();
-        calender1 = new com.karam.dentistry.schedules.Calender();
 
         removeAppointmentButton.setText("REMOVE APPOINTMENT");
         removeAppointmentButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -120,6 +117,19 @@ public class Schedule extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 6, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 382, Short.MAX_VALUE)
+        );
+
+        calender1.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+
         appointmentsPanel.setBackground(new java.awt.Color(30, 30, 30));
 
         jLabel2.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
@@ -154,28 +164,9 @@ public class Schedule extends javax.swing.JPanel {
                 .addGap(9, 9, 9)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
                 .addContainerGap())
         );
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(appointmentsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(appointmentsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        calender1.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -186,6 +177,8 @@ public class Schedule extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(calender1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(appointmentsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
@@ -198,7 +191,8 @@ public class Schedule extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(calender1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(calender1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(appointmentsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -211,6 +205,7 @@ public class Schedule extends javax.swing.JPanel {
             return;
         }
         
+        // A check to ensure non null to prevent cells that are empty from the calendar to cause an errors
         Object value = calender.getCalendarTable().getValueAt(getLastSelectedRow(), getLastSelectedColumn());
         if (value == null || value.toString().length() == 0){
             JOptionPane.showMessageDialog(this, "You must select a valid day!", "Error!", JOptionPane.OK_OPTION);
@@ -235,6 +230,7 @@ public class Schedule extends javax.swing.JPanel {
             return;
         }    
         
+        // checks if the selected appointment from the panel on the right side is actually real
         String appointmentId = appointmentsIds.get(selectedIndex);
         if (selectedIndex >= 0 && appointmentId != null) {
             Main.getInstance().getAppointmentManager().remove(appointmentId);
@@ -242,12 +238,18 @@ public class Schedule extends javax.swing.JPanel {
     }//GEN-LAST:event_removeAppointmentButtonMouseClicked
 
     public void updateAppointmentPanel(Calendar calendar, Object value){
+        // Checks if the inputted value is valid. This can be null in the case that
+        // the calendar cell is empty (Like days before 1 or days after 30) since the table
+        // is a 6x7 which is 42 (there is no 42 days in a month.. ever)
         if (value == null || value.toString().length() == 0){
             return;
         }
         
+        // Empties the appointment list in the panel.
         this.appointmentsList.setListData(new String[0]);
         String data = value.toString();       
+        
+        // Fetches all appointments based on the day
         List<Appointment> appointments = Main.getInstance().getAppointmentManager().getAppointmentsForDay(calendar, data);
         if (appointments.isEmpty()){
             return;

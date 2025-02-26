@@ -4,10 +4,9 @@
  */
 package com.karam.dentistry.customer.table;
 
-/**
- *
- * @author karam
- */
+/*
+* inspired by https://www.youtube.com/watch?v=RMwufjRRHBU&t=523s
+*/
 public interface TableActionEvent {
     
     public void onEdit(int row);

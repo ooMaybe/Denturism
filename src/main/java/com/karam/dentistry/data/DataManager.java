@@ -41,7 +41,9 @@ public class DataManager {
     */
     private void init(){
         try {
+            // Extra check just in case database decided to load itself more than once.
             if (!connected()) {
+                // Looks for a file titled "main.db" in the user working directory.
                 File databaseFile = new File(System.getProperty("user.dir") + "/data/main.db");
                 if (!databaseFile.exists()){
                     databaseFile.getParentFile().mkdirs();
@@ -256,6 +258,7 @@ public class DataManager {
     // main method for doing any commands to the database. uses an organized and condensed method that can be used frrom
     public Object query(QueryType type, String query, Object... params) {
         try {
+            // Checks between the three tpes
             if (type == QueryType.GET) {
                 PreparedStatement pst = this.conn.prepareStatement(query);
                 ResultSet rs = pst.executeQuery();

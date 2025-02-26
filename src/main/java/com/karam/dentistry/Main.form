@@ -104,7 +104,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="customerButton" max="32767" attributes="0"/>
-                          <Component id="customerBar" max="32767" attributes="0"/>
+                          <Component id="customerBar" pref="126" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="672" max="32767" attributes="0"/>
                   </Group>
@@ -131,13 +131,13 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="scheduleButton">
               <Properties>
-                <Property name="text" type="java.lang.String" value="SCHEDULE"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tw Cen MT" size="24" style="1"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
                 </Property>
+                <Property name="text" type="java.lang.String" value="SCHEDULE"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="scheduleButtonMouseClicked"/>
@@ -175,13 +175,13 @@
             </Container>
             <Component class="javax.swing.JLabel" name="customerButton">
               <Properties>
-                <Property name="text" type="java.lang.String" value="CUSTOMERS"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tw Cen MT" size="24" style="1"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
                 </Property>
+                <Property name="text" type="java.lang.String" value="CUSTOMERS"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="customerButtonMouseClicked"/>

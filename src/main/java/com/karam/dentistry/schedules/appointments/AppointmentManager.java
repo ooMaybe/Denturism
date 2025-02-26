@@ -103,7 +103,7 @@ public class AppointmentManager {
             
             boolean removed = appointments.removeIf(appt -> appt.getAppointmentID().equals(appointmentId));
             if (removed) {
-                JOptionPane.showMessageDialog(Main.getInstance(), "Sucessfully removeD the appointment " + appointmentId + "from the list!", "Success!", JOptionPane.OK_OPTION);
+                JOptionPane.showMessageDialog(Main.getInstance(), "Sucessfully removed the appointment " + appointmentId + "from the list!", "Success!", JOptionPane.OK_OPTION);
             } else {
                 JOptionPane.showMessageDialog(Main.getInstance(), "Failed to remove the appointment from the list id=" + appointmentId, "Error!", JOptionPane.OK_OPTION);
             }

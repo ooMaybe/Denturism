@@ -121,6 +121,11 @@ public class Customer extends javax.swing.JPanel {
         });
 
         searchButton.setText("SEARCH");
+        searchButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                searchButtonMouseClicked(evt);
+            }
+        });
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/karam/dentistry/images/Plus.png"))); // NOI18N
         jButton1.setText("ADD PATIENT");
@@ -177,6 +182,10 @@ public class Customer extends javax.swing.JPanel {
         // TODO add your handling code here:
         refreshTable();
     }//GEN-LAST:event_searchBoxKeyPressed
+
+    private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
+        refreshTable();
+    }//GEN-LAST:event_searchButtonMouseClicked
 
     
     public void refreshTable(){

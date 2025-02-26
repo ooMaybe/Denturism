@@ -7,10 +7,9 @@ package com.karam.dentistry.customer.table;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- *
- * @author Karam
- */
+/*
+* Heavily inspired by https://www.youtube.com/watch?v=RMwufjRRHBU&t=523s
+*/
 public class PanelAction extends javax.swing.JPanel {
 
     /**

@@ -338,6 +338,8 @@ public class Calender extends javax.swing.JPanel {
                 model.setRowCount(6); // 6 rows max
                 model.setColumnCount(7); // 7 columns (days)
 
+                calendarTable.setRowHeight(50);
+                
                 int dayCounter = 1;
 
                 for (int row = 0; row < 6; row++) {
@@ -378,6 +380,8 @@ public class Calender extends javax.swing.JPanel {
 
                 model.setRowCount(1); // Single row
                 model.setColumnCount(7); // 7 days
+                
+                calendarTable.setRowHeight(300);
 
                 for (int i = 0; i < 7; i++) {
                     int weekDay = calendar.get(Calendar.DAY_OF_MONTH);
