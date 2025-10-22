@@ -81,7 +81,7 @@ public class Main extends javax.swing.JFrame {
         mainPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Dentisry");
+        setTitle("Dentistry");
         setBackground(new java.awt.Color(20, 20, 20));
         setMaximumSize(new java.awt.Dimension(918, 500));
         setMinimumSize(new java.awt.Dimension(918, 500));
